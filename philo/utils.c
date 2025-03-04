@@ -6,23 +6,50 @@
 /*   By: bhajili <bhajili@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 10:37:51 by bhajili           #+#    #+#             */
-/*   Updated: 2025/03/04 10:48:11 by bhajili          ###   ########.fr       */
+/*   Updated: 2025/03/04 12:12:47 by bhajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	is_digit(const char c)
+int	ft_is_digit(const char c)
 {
 	return (c > 47 && c < 58);
 }
 
-int	is_only_digits(const char *str)
+int	ft_is_space(char c)
+{
+	return (c == 32 || (c >= 9 && c <= 13));
+}
+
+long long	ft_atoll(char *str)
+{
+	long long	num;
+	int			sign;
+
+	num = 0;
+	sign = 1;
+	while (*str && ft_is_space(*str))
+		str++;
+	while (*str == '-' || *str == '+')
+		if (*str++ == '-')
+			sign *= -1;
+	while (*str && ft_is_digit(*str))
+		num = num * 10 + *str++ - 48;
+	return ((num * sign));
+}
+
+int	ft_atoi(char *str)
+{
+	return ((int)ft_atoll(str));
+}
+
+int	ft_is_digits(const char *str)
 {
 	if (NULL == str)
 		return (0);
 	while (*str)
-		if (0 == is_digit(*str++))
+		if (0 == ft_is_digit(*str++))
 			return (0);
 	return (1);
 }
@@ -32,7 +59,7 @@ long	ft_atol(const char *str)
 	return (atol(str));
 }
 
-int	is_integer(const char *str)
+int	ft_is_integer(const char *str)
 {
 	long	num;
 
