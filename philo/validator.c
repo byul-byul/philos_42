@@ -6,11 +6,26 @@
 /*   By: bhajili <bhajili@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 10:10:21 by bhajili           #+#    #+#             */
-/*   Updated: 2025/03/04 12:13:16 by bhajili          ###   ########.fr       */
+/*   Updated: 2025/03/04 15:11:28 by bhajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+int	validate_data(int ac, t_data *data)
+{
+	if (0 >= data->philo_count || MAX_PHILO_COUNT < data->philo_count)
+		return (4);
+	if (0 >= data->die_time || MIN_MSEC_VALUE > data->die_time)
+		return (5);
+	if (0 >= data->eat_time || MIN_MSEC_VALUE > data->eat_time)
+		return (6);
+	if (0 >= data->sleep_time || MIN_MSEC_VALUE > data->sleep_time)
+		return (7);
+	if (5 == ac && 0 >= data->eat_count)
+		return (8);
+	return (0);
+}
 
 int	validate_arg(int ac, char **av)
 {

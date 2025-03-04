@@ -1,26 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.c                                           :+:      :+:    :+:   */
+/*   simulator.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bhajili <bhajili@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/04 11:11:51 by bhajili           #+#    #+#             */
-/*   Updated: 2025/03/04 14:24:08 by bhajili          ###   ########.fr       */
+/*   Created: 2025/03/04 13:18:33 by bhajili           #+#    #+#             */
+/*   Updated: 2025/03/04 15:21:32 by bhajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	parse_arg(int ac, char **av, t_data *data)
+void	*philo_simulation(void *arg)
 {
-	data->philo_count = ft_atoi(av[0]);
-	data->die_time = ft_atoll(av[1]);
-	data->eat_time = ft_atoll(av[2]);
-	data->sleep_time = ft_atoll(av[3]);
-	if (ac == 5)
-		data->eat_count = ft_atoi(av[4]);
-	else
-		data->eat_count = -1;
+	int	id;
+
+	id = *(int *)arg;
+	printf("I am philo № %d\n", id);
+	return (NULL);
+}
+
+int	do_simulation(t_data *d)
+{
+	int	i;
+
+	i = -1;
+	while (++i < d->philo_count)
+	{
+		pthread_create(&d->philo_list[i].thread, NULL, \
+		philo_simulation, &d->philo_list[i].name);
+		usleep(360000);
+	}
+	i = -1;
+	while (++i < d->philo_count)
+	{
+		pthread_join(d->philo_list[i].thread, NULL);
+	}
 	return (0);
 }

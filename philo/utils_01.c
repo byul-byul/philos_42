@@ -6,7 +6,7 @@
 /*   By: bhajili <bhajili@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 10:37:51 by bhajili           #+#    #+#             */
-/*   Updated: 2025/03/04 12:31:11 by bhajili          ###   ########.fr       */
+/*   Updated: 2025/03/04 14:54:03 by bhajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,19 +39,26 @@ void	ft_putstr(const char *str)
 
 void	print_error(int error_code)
 {
-	if (ERR_MSG_ENABLED == TRUE)
-	{
-		if (error_code == 0)
-			return ;
-		else if (error_code == 1)
-			ft_putstr(ERR_MSG_01);
-		else if (error_code == 2)
-			ft_putstr(ERR_MSG_02);
-		else if (error_code == 3)
-			ft_putstr(ERR_MSG_03);
-		else
-			ft_putstr(ERR_MSG_00);
-	}
-	else if (error_code > 0)
+	if (error_code == 0 || ERR_MSG_ENABLED == FALSE)
+		return ;
+	if (error_code == 1)
+		ft_putstr(ERR_MSG_01);
+	else if (error_code == 2)
+		ft_putstr(ERR_MSG_02);
+	else if (error_code == 3)
+		ft_putstr(ERR_MSG_03);
+	else if (error_code == 4)
+		ft_putstr(ERR_MSG_04);
+	else if (error_code == 5)
+		ft_putstr(ERR_MSG_05);
+	else if (error_code == 6)
+		ft_putstr(ERR_MSG_06);
+	else if (error_code == 7)
+		ft_putstr(ERR_MSG_07);
+	else if (error_code == 8)
+		ft_putstr(ERR_MSG_08);
+	else if (error_code == 9)
+		ft_putstr(ERR_MSG_09);
+	else
 		ft_putstr(ERR_MSG_00);
 }

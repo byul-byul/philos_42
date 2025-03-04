@@ -1,26 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.c                                           :+:      :+:    :+:   */
+/*   initializator.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bhajili <bhajili@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/04 11:11:51 by bhajili           #+#    #+#             */
-/*   Updated: 2025/03/04 14:24:08 by bhajili          ###   ########.fr       */
+/*   Created: 2025/03/04 15:00:58 by bhajili           #+#    #+#             */
+/*   Updated: 2025/03/04 15:13:46 by bhajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	parse_arg(int ac, char **av, t_data *data)
+void	init_philo(t_data *data, int order)
 {
-	data->philo_count = ft_atoi(av[0]);
-	data->die_time = ft_atoll(av[1]);
-	data->eat_time = ft_atoll(av[2]);
-	data->sleep_time = ft_atoll(av[3]);
-	if (ac == 5)
-		data->eat_count = ft_atoi(av[4]);
-	else
-		data->eat_count = -1;
-	return (0);
+	data->philo_list[order - 1].name = order;
+}
+
+int	init_data(t_data *data)
+{
+	int	i;
+
+	i = -1;
+	data->philo_list = malloc(sizeof(t_philo) * data->philo_count + 1);
+	if (data->philo_list)
+	{
+		while (++i < data->philo_count)
+		{
+			init_philo(data, i + 1);
+		}
+		return (0);
+	}
+	return (9);
 }
