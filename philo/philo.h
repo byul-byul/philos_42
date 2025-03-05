@@ -6,7 +6,7 @@
 /*   By: bhajili <bhajili@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 09:31:38 by bhajili           #+#    #+#             */
-/*   Updated: 2025/03/04 15:07:11 by bhajili          ###   ########.fr       */
+/*   Updated: 2025/03/05 06:52:09 by bhajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,20 +58,30 @@ data validation failed: \'eat_count\' should be >0.\n"
 # define ERR_MSG_09	"ERROR: \
 data initialization failed: malloc() failed.\n"
 
+typedef struct s_fork
+{
+	int				id;
+	pthread_mutex_t mutex;
+}				t_fork;
+
 typedef struct s_philo
 {
-	int			name;
-	pthread_t	thread;
+	int				id;
+	pthread_t		thread;
+	pthread_mutex_t	*left;
+	pthread_mutex_t	*right;
 }				t_philo;
 
 typedef struct s_data
 {
+	int			need_free;
 	int			philo_count;
 	int			eat_count;
 	long long	die_time;
 	long long	eat_time;
 	long long	sleep_time;
 	t_philo		*philo_list;
+	t_fork		*fork_list;
 }				t_data;
 
 void		philo(int ac, char **av);
@@ -80,6 +90,7 @@ int			parse_arg(int ac, char **av, t_data *data);
 int			validate_data(int ac, t_data *data);
 int			init_data(t_data *data);
 int			do_simulation(t_data *d);
+void		clean_data(t_data *d);
 void		print_error(int error_code);
 int			ft_is_digits(const char *str);
 int			ft_is_integer(const char *str);
