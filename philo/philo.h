@@ -6,7 +6,7 @@
 /*   By: bhajili <bhajili@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 09:31:38 by bhajili           #+#    #+#             */
-/*   Updated: 2025/03/05 13:18:32 by bhajili          ###   ########.fr       */
+/*   Updated: 2025/03/05 14:48:29 by bhajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ data initialization failed: pthread_mutex_init() failed.\n"
 typedef struct s_fork
 {
 	int				id;
-	pthread_mutex_t mutex;
+	pthread_mutex_t	mutex;
 }				t_fork;
 
 typedef struct s_philo
@@ -77,7 +77,8 @@ typedef struct s_philo
 
 typedef struct s_data
 {
-	int			need_free;
+	int			has_allocated_memory;
+	int			has_active_mutex;
 	int			philo_count;
 	int			eat_count;
 	long long	die_time;

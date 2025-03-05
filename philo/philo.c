@@ -6,7 +6,7 @@
 /*   By: bhajili <bhajili@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 09:33:44 by bhajili           #+#    #+#             */
-/*   Updated: 2025/03/05 12:43:20 by bhajili          ###   ########.fr       */
+/*   Updated: 2025/03/05 14:50:04 by bhajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,9 @@ void	print_data(t_data d)
 
 void	philo(int ac, char **av)
 {
-	int		error_code;
 	t_data	d;
+	int		error_code;
 
-	d.need_free = 0;
 	error_code = validate_arg(ac, av);
 	if (0 == error_code)
 		error_code = parse_arg(ac, av, &d);
