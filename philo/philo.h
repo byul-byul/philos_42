@@ -6,7 +6,7 @@
 /*   By: bhajili <bhajili@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 09:31:38 by bhajili           #+#    #+#             */
-/*   Updated: 2025/03/05 06:52:09 by bhajili          ###   ########.fr       */
+/*   Updated: 2025/03/05 13:18:32 by bhajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,9 @@ data validation failed: \'eat_count\' should be >0.\n"
 # define ERR_MSG_09	"ERROR: \
 data initialization failed: malloc() failed.\n"
 
+# define ERR_MSG_10	"ERROR: \
+data initialization failed: pthread_mutex_init() failed.\n"
+
 typedef struct s_fork
 {
 	int				id;
@@ -66,10 +69,10 @@ typedef struct s_fork
 
 typedef struct s_philo
 {
-	int				id;
-	pthread_t		thread;
-	pthread_mutex_t	*left;
-	pthread_mutex_t	*right;
+	int			id;
+	pthread_t	thread;
+	t_fork		*left;
+	t_fork		*right;
 }				t_philo;
 
 typedef struct s_data
@@ -90,6 +93,7 @@ int			parse_arg(int ac, char **av, t_data *data);
 int			validate_data(int ac, t_data *data);
 int			init_data(t_data *data);
 int			do_simulation(t_data *d);
+void		destroy_mutex_list(t_data *d, int size);
 void		clean_data(t_data *d);
 void		print_error(int error_code);
 int			ft_is_digits(const char *str);

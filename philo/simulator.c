@@ -6,7 +6,7 @@
 /*   By: bhajili <bhajili@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 13:18:33 by bhajili           #+#    #+#             */
-/*   Updated: 2025/03/05 06:55:42 by bhajili          ###   ########.fr       */
+/*   Updated: 2025/03/05 13:24:42 by bhajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,17 @@ void	*philo_simulation(void *arg)
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
-	pthread_mutex_lock(philo->left);
+	pthread_mutex_lock(&philo->left->mutex);
 	printf("philo № %d has taken Fork Left\n", philo->id);
-	pthread_mutex_lock(philo->right);
+	pthread_mutex_lock(&philo->right->mutex);
 	printf("philo № %d has taken Fork Right\n", philo->id);
 	if (philo->id == 4)
 		usleep(7000000);
 	printf("HELLO! I am philo № %d\n", philo->id);
-	pthread_mutex_unlock(philo->left);
+	pthread_mutex_unlock(&philo->left->mutex);
 	printf("philo № %d has freed Fork Left\n", philo->id);
+	pthread_mutex_unlock(&philo->right->mutex);
 	printf("philo № %d has freed Fork Right\n", philo->id);
-	pthread_mutex_unlock(philo->right);
 	return (NULL);
 }
 
