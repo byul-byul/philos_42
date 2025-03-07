@@ -6,7 +6,7 @@
 /*   By: bhajili <bhajili@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 13:18:33 by bhajili           #+#    #+#             */
-/*   Updated: 2025/03/08 00:05:18 by bhajili          ###   ########.fr       */
+/*   Updated: 2025/03/08 00:54:09 by bhajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,13 @@ int	start_eating(t_philo *philo)
 			return (drop_forks(philo), 1);
 		custom_usleep(philo->data->eat_time);
 	}
+	if (pthread_mutex_lock(&philo->data->updater) != 0)
+		return (print_error(11), rise_simulation_endflag(philo->data), 1);
+	philo->meal_count += 1;
+	if (philo->data->eat_count != -1 && philo->meal_count >= philo->data->eat_count)
+		philo->data->finished_philo_count++;
+	if (pthread_mutex_unlock(&philo->data->updater) != 0)
+		return (print_error(12), rise_simulation_endflag(philo->data), 1);
 	return (0);
 }
 
@@ -96,16 +103,16 @@ int	exceptional_drop_fork(t_philo *philo, int order)
 {
 	if (philo->id % 2 == 1 && order == 0)
 		if (pthread_mutex_unlock(&philo->left->mutex))
-			return (print_error(11), 1);
+			return (print_error(12), 1);
 	if (philo->id % 2 == 1 && order == 1)
 		if (pthread_mutex_unlock(&philo->right->mutex))
-			return (print_error(11), 1);
+			return (print_error(12), 1);
 	if (philo->id % 2 == 0 && order == 0)
 		if (pthread_mutex_unlock(&philo->right->mutex))
-			return (print_error(11), 1);
+			return (print_error(12), 1);
 	if (philo->id % 2 == 0 && order == 1)
 		if (pthread_mutex_unlock(&philo->left->mutex))
-			return (print_error(11), 1);
+			return (print_error(12), 1);
 	return (0);
 }
 
@@ -143,6 +150,37 @@ static void	*simulate_philo(void *arg)
 	return (NULL);
 }
 
+static void	*simulate_lonely_philo(void *arg)
+{
+	t_philo		*philo;
+
+	philo = (t_philo *)arg;
+	if (is_simulation_endflag_rised(philo->data))
+		return (NULL);
+	if (pthread_mutex_lock(&philo->left->mutex))
+		return (print_error(11), NULL);
+	if (print_philo_action(philo, get_current_timestamp(), 1))
+		return (rise_simulation_endflag(philo->data), NULL);
+	custom_usleep(philo->data->die_time);
+	if (print_philo_action(philo, get_current_timestamp(), 5))
+		return (rise_simulation_endflag(philo->data), NULL);
+	if (pthread_mutex_unlock(&philo->left->mutex))
+		return (print_error(12), NULL);
+	return (NULL);
+}
+
+int	handle_lonely_philo(t_data *d)
+{
+	if (pthread_create(&d->philo_list[0].thread, NULL, \
+		simulate_lonely_philo, &d->philo_list[0]))
+	{
+		print_error(13);
+		d->end_simulation = 1;
+		return (1) ;
+	}
+	return (pthread_join(d->philo_list[0].thread, NULL), 0);
+}
+
 int	monitor_simulation(t_data *d)
 {
 	int	i;
@@ -162,6 +200,13 @@ int	monitor_simulation(t_data *d)
 					return (print_error(12), rise_simulation_endflag(d), 1);
 				break ;
 			}
+			if (d->finished_philo_count >= d->philo_count)
+			{
+				d->end_simulation = 1;
+				if (pthread_mutex_unlock(&d->updater) != 0)
+					return (print_error(12), rise_simulation_endflag(d), 1);
+				break ;
+			}
 			if (pthread_mutex_unlock(&d->updater) != 0)
 				return (print_error(12), rise_simulation_endflag(d), 1);
 		}
@@ -177,6 +222,8 @@ int	do_simulation(t_data *d)
 
 	i = -1;
 	simulation_start_time = get_current_timestamp();
+	if (d->philo_count == 1)
+		return (handle_lonely_philo(d));
 	while (++i < d->philo_count)
 	{
 		d->philo_list[i].last_meal_time = simulation_start_time;
