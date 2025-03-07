@@ -6,22 +6,21 @@
 /*   By: bhajili <bhajili@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 15:00:58 by bhajili           #+#    #+#             */
-/*   Updated: 2025/03/07 21:45:15 by bhajili          ###   ########.fr       */
+/*   Updated: 2025/03/08 02:18:46 by bhajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static void	init_philo(t_philo *philo, int id, t_fork *left, t_fork *right, \
-						t_data *d)
+static void	init_philo(t_data *d, int i, t_fork *left, t_fork *right)
 {
-	philo->id = id;
-	philo->left = left;
-	philo->right = right;
-	philo->left->mutex = left->mutex;
-	philo->right->mutex = right->mutex;
-	philo->data = d;
-	philo->meal_count = 0;
+	d->philo_list[i].id = i + 1;
+	d->philo_list[i].left = left;
+	d->philo_list[i].right = right;
+	d->philo_list[i].left->mutex = left->mutex;
+	d->philo_list[i].right->mutex = right->mutex;
+	d->philo_list[i].data = d;
+	d->philo_list[i].meal_count = 0;
 }
 
 static void	init_philo_list(t_data *d)
@@ -31,17 +30,10 @@ static void	init_philo_list(t_data *d)
 
 	i = 0;
 	n = d->philo_count;
-	init_philo(&d->philo_list[i], i + 1, \
-		&d->fork_list[n - 1], &d->fork_list[i], d);
-	if (n > 1)
-		init_philo(&d->philo_list[n - 1], n, \
-			&d->fork_list[n - 2], &d->fork_list[n - 1], d);
-	else
-		init_philo(&d->philo_list[n - 1], n, \
-			&d->fork_list[n - 1], &d->fork_list[n - 1], d);
+	init_philo(d, i, &d->fork_list[n - 1], &d->fork_list[i]);
+	init_philo(d, n - 1, &d->fork_list[n - 2], &d->fork_list[n - 1]);
 	while (++i < n - 1)
-		init_philo(&d->philo_list[i], i + 1, \
-			&d->fork_list[i - 1], &d->fork_list[i], d);
+		init_philo(d, i, &d->fork_list[i - 1], &d->fork_list[i]);
 }
 
 static int	init_fork_list(t_data *d)

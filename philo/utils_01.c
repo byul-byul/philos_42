@@ -6,7 +6,7 @@
 /*   By: bhajili <bhajili@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 15:09:32 by bhajili           #+#    #+#             */
-/*   Updated: 2025/03/07 23:51:38 by bhajili          ###   ########.fr       */
+/*   Updated: 2025/03/08 02:12:02 by bhajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ void	print_error(int error_code)
 		ft_putstr(ERR_MSG_11);
 	else if (error_code == 12)
 		ft_putstr(ERR_MSG_12);
+	else if (error_code == 13)
+		ft_putstr(ERR_MSG_13);
 	else
 		ft_putstr(ERR_MSG_00);
 }

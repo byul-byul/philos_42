@@ -6,7 +6,7 @@
 /*   By: bhajili <bhajili@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 09:31:38 by bhajili           #+#    #+#             */
-/*   Updated: 2025/03/07 23:51:15 by bhajili          ###   ########.fr       */
+/*   Updated: 2025/03/08 02:20:16 by bhajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,21 +39,21 @@
 # define PHILO_MSG_05	"died\n"
 
 # define ERR_MSG_00	"ERROR: unknown error.\n"
-# define ERR_MSG_01 "ERROR: input validation failed: provide only 5-6 args.\n"
-# define ERR_MSG_02	"ERROR: input validation failed: provide only digits.\n"
-# define ERR_MSG_03	"ERROR: input validation failed: provide only INTs.\n"
-# define ERR_MSG_04	"ERROR: data validation failed: \'philo_count\' must be >0.\n"
-# define ERR_MSG_05	"ERROR: data validation failed: \'time_to_die\' must be >0.\n"
-# define ERR_MSG_06	"ERROR: data validation failed: \'time_to_eat\' must be >0.\n"
-# define ERR_MSG_07	"ERROR: data validation failed: \'time_to_sleep\' must be >0.\n"
-# define ERR_MSG_08	"ERROR: data validation failed: \'eat_count\' must be >0.\n"
-# define ERR_MSG_09	"ERROR: data initialization failed: malloc() failed.\n"
-# define ERR_MSG_10	"ERROR: data initialization failed: pthread_mutex_init() failed.\n"
-# define ERR_MSG_11	"ERROR: simulation failed: pthread_mutex_lock() failed.\n"
-# define ERR_MSG_12	"ERROR: simulation failed: pthread_mutex_unlock() failed.\n"
-# define ERR_MSG_13	"ERROR: simulation failed: pthread_create() failed.\n"
+# define ERR_MSG_01 "ERROR: input validation: provide only 5-6 args.\n"
+# define ERR_MSG_02	"ERROR: input validation: provide only digits.\n"
+# define ERR_MSG_03	"ERROR: input validation: provide only INTs.\n"
+# define ERR_MSG_04	"ERROR: data validation: \'philo_count\' must be >0.\n"
+# define ERR_MSG_05	"ERROR: data validation: \'time_to_die\' must be >60.\n"
+# define ERR_MSG_06	"ERROR: data validation: \'time_to_eat\' must be >60.\n"
+# define ERR_MSG_07	"ERROR: data validation: \'time_to_sleep\' must be >60.\n"
+# define ERR_MSG_08	"ERROR: data validation: \'eat_count\' must be >0.\n"
+# define ERR_MSG_09	"ERROR: data initialization: malloc() failed.\n"
+# define ERR_MSG_10	"ERROR: data initialization: pthread_mutex_init() failed.\n"
+# define ERR_MSG_11	"ERROR: simulation: pthread_mutex_lock() failed.\n"
+# define ERR_MSG_12	"ERROR: simulation: pthread_mutex_unlock() failed.\n"
+# define ERR_MSG_13	"ERROR: simulation: pthread_create() failed.\n"
 
-typedef struct s_data t_data;
+typedef struct s_data	t_data;
 
 typedef struct s_fork
 {
