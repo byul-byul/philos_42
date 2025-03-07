@@ -6,7 +6,7 @@
 /*   By: bhajili <bhajili@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 09:31:38 by bhajili           #+#    #+#             */
-/*   Updated: 2025/03/07 22:56:07 by bhajili          ###   ########.fr       */
+/*   Updated: 2025/03/07 23:51:15 by bhajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@
 # define PHILO_MSG_02	"is eating\n"
 # define PHILO_MSG_03	"is sleeping\n"
 # define PHILO_MSG_04	"is thinking\n"
-# define PHILO_MSG_05	"DIED !!!\n"
+# define PHILO_MSG_05	"died\n"
 
 # define ERR_MSG_00	"ERROR: unknown error.\n"
 # define ERR_MSG_01 "ERROR: input validation failed: provide only 5-6 args.\n"
@@ -105,6 +105,7 @@ int			ft_atoi(const char *str);
 long long	ft_atoll(const char *str);
 int			print_philo_action(t_philo *philo, long long tstamp, int msg_code);
 void		custom_usleep(long long sleep_time);
-int			rise_simulation_end_flag(t_data *d);
+int			rise_simulation_endflag(t_data *d);
+int			is_simulation_endflag_rised(t_data *d);
 
 #endif

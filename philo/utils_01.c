@@ -6,7 +6,7 @@
 /*   By: bhajili <bhajili@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 15:09:32 by bhajili           #+#    #+#             */
-/*   Updated: 2025/03/07 22:54:41 by bhajili          ###   ########.fr       */
+/*   Updated: 2025/03/07 23:51:38 by bhajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,9 @@ long long	get_current_timestamp(void)
 int	print_philo_action(t_philo *philo, long long tstamp, int msg_code)
 {
 	if (pthread_mutex_lock(&philo->data->notifier))
-		return (print_error(11), rise_simulation_end_flag(philo->data), 1);
+		return (print_error(11), rise_simulation_endflag(philo->data), 1);
+	if (1 == philo->data->end_simulation && msg_code == 5)
+		printf("%lld %d %s", tstamp, philo->id, PHILO_MSG_05);
 	if (philo->data->end_simulation == 0)
 	{
 		if (msg_code == 1)
@@ -97,7 +99,7 @@ int	print_philo_action(t_philo *philo, long long tstamp, int msg_code)
 			ft_putstr(PHILO_MSG_00);
 	}
 	if (pthread_mutex_unlock(&philo->data->notifier))
-		return (print_error(12), rise_simulation_end_flag(philo->data), 1);
+		return (print_error(12), rise_simulation_endflag(philo->data), 1);
 	return (0);
 }
 
@@ -110,7 +112,7 @@ void	custom_usleep(long long sleep_time)
 		usleep(CUSTOM_USLEEP_TIME);
 }
 
-int	rise_simulation_end_flag(t_data *d)
+int	rise_simulation_endflag(t_data *d)
 {
 	if (pthread_mutex_lock(&d->updater) != 0)
 		return (print_error(11), 1);
@@ -118,4 +120,16 @@ int	rise_simulation_end_flag(t_data *d)
 	if (pthread_mutex_unlock(&d->updater))
 		return (print_error(12), 1);
 	return (0);
+}
+
+int	is_simulation_endflag_rised(t_data *d)
+{
+	int	is_rised;
+
+	if (pthread_mutex_lock(&d->updater) != 0)
+		return (print_error(11), 1);
+	is_rised = (1 == d->end_simulation);
+	if (pthread_mutex_unlock(&d->updater))
+		return (print_error(12), 1);
+	return (is_rised);
 }
