@@ -6,7 +6,7 @@
 #    By: bhajili <bhajili@student.42abudhabi.ae>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/04 10:36:52 by bhajili           #+#    #+#              #
-#    Updated: 2025/03/04 16:10:49 by bhajili          ###   ########.fr        #
+#    Updated: 2025/03/09 13:46:49 by bhajili          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,10 +23,13 @@ SRCS    =   $(D_SRC)main.c \
 			$(D_SRC)validator.c \
 			$(D_SRC)parser.c \
 			$(D_SRC)initializator.c \
-			$(D_SRC)simulator.c \
+			$(D_SRC)simulator_00.c \
+			$(D_SRC)simulator_01.c \
+			$(D_SRC)simulator_02.c \
 			$(D_SRC)cleaner.c \
 			$(D_SRC)utils_00.c \
-			$(D_SRC)utils_01.c
+			$(D_SRC)utils_01.c \
+			$(D_SRC)utils_02.c
 
 OBJS    =   $(SRCS:.c=.o)
 

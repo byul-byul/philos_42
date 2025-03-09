@@ -6,7 +6,7 @@
 /*   By: bhajili <bhajili@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 09:31:38 by bhajili           #+#    #+#             */
-/*   Updated: 2025/03/08 02:20:16 by bhajili          ###   ########.fr       */
+/*   Updated: 2025/03/09 13:50:07 by bhajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 # define MAX_ARG_COUNT		5
 # define MAX_PHILO_COUNT	200
 # define MIN_MSEC_VALUE		60
-# define CUSTOM_USLEEP_TIME	500
+# define MIN_USLEEP_TIME	500
 
 # define PHILO_MSG_00	"unknown action\n"
 # define PHILO_MSG_01	"has taken a fork\n"
@@ -49,9 +49,7 @@
 # define ERR_MSG_08	"ERROR: data validation: \'eat_count\' must be >0.\n"
 # define ERR_MSG_09	"ERROR: data initialization: malloc() failed.\n"
 # define ERR_MSG_10	"ERROR: data initialization: pthread_mutex_init() failed.\n"
-# define ERR_MSG_11	"ERROR: simulation: pthread_mutex_lock() failed.\n"
-# define ERR_MSG_12	"ERROR: simulation: pthread_mutex_unlock() failed.\n"
-# define ERR_MSG_13	"ERROR: simulation: pthread_create() failed.\n"
+# define ERR_MSG_11	"ERROR: simulation: pthread_create() failed.\n"
 
 typedef struct s_data	t_data;
 
@@ -89,7 +87,7 @@ typedef struct s_data
 	pthread_mutex_t	updater;
 }				t_data;
 
-void		philo(int ac, char **av);
+int			philo(int ac, char **av);
 int			validate_arg(int ac, char **av);
 int			parse_arg(int ac, char **av, t_data *data);
 int			validate_data(int ac, t_data *data);
@@ -103,9 +101,13 @@ int			ft_is_digits(const char *str);
 int			ft_is_integer(const char *str);
 int			ft_atoi(const char *str);
 long long	ft_atoll(const char *str);
-int			print_philo_action(t_philo *philo, long long tstamp, int msg_code);
+void		print_philo_action(t_philo *philo, long long tstamp, int msg_code);
 void		custom_usleep(long long sleep_time);
-int			rise_simulation_endflag(t_data *d);
+void		rise_simulation_endflag(t_data *d);
 int			is_simulation_endflag_rised(t_data *d);
+void		take_fork(t_philo *philo, int order);
+void		drop_fork(t_philo *philo, int order);
+void		drop_forks(t_philo *philo);
+void		*simulate_philo(void *arg);
 
 #endif

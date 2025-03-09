@@ -6,13 +6,13 @@
 /*   By: bhajili <bhajili@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 09:33:44 by bhajili           #+#    #+#             */
-/*   Updated: 2025/03/08 02:12:53 by bhajili          ###   ########.fr       */
+/*   Updated: 2025/03/09 13:32:19 by bhajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	philo(int ac, char **av)
+int	philo(int ac, char **av)
 {
 	t_data	d;
 	int		error_code;
@@ -29,4 +29,5 @@ void	philo(int ac, char **av)
 	if (0 != error_code)
 		print_error(error_code);
 	clean_data(&d);
+	return (error_code);
 }

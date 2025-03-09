@@ -6,7 +6,7 @@
 /*   By: bhajili <bhajili@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 15:09:32 by bhajili           #+#    #+#             */
-/*   Updated: 2025/03/08 02:12:02 by bhajili          ###   ########.fr       */
+/*   Updated: 2025/03/09 13:28:50 by bhajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,8 @@ void	ft_putstr(const char *str)
 	write(1, str, ft_strlen(str));
 }
 
-void	print_error(int error_code)
+static void	print_error_01_11(int error_code)
 {
-	if (error_code == 0 || ERR_MSG_ENABLED == FALSE)
-		return ;
 	if (error_code == 1)
 		ft_putstr(ERR_MSG_01);
 	else if (error_code == 2)
@@ -63,75 +61,14 @@ void	print_error(int error_code)
 		ft_putstr(ERR_MSG_10);
 	else if (error_code == 11)
 		ft_putstr(ERR_MSG_11);
-	else if (error_code == 12)
-		ft_putstr(ERR_MSG_12);
-	else if (error_code == 13)
-		ft_putstr(ERR_MSG_13);
+}
+
+void	print_error(int error_code)
+{
+	if (error_code == 0 || ERR_MSG_ENABLED == FALSE)
+		return ;
+	if (error_code >= 1 && error_code <= 11)
+		print_error_01_11(error_code);
 	else
 		ft_putstr(ERR_MSG_00);
-}
-
-long long	get_current_timestamp(void)
-{
-	struct timeval	tv;
-
-	gettimeofday(&tv, NULL);
-	return (tv.tv_sec * 1000LL + tv.tv_usec / 1000);
-}
-
-int	print_philo_action(t_philo *philo, long long tstamp, int msg_code)
-{
-	if (pthread_mutex_lock(&philo->data->notifier))
-		return (print_error(11), rise_simulation_endflag(philo->data), 1);
-	if (1 == philo->data->end_simulation && msg_code == 5)
-		printf("%lld %d %s", tstamp, philo->id, PHILO_MSG_05);
-	if (philo->data->end_simulation == 0)
-	{
-		if (msg_code == 1)
-			printf("%lld %d %s", tstamp, philo->id, PHILO_MSG_01);
-		else if (msg_code == 2)
-			printf("%lld %d %s", tstamp, philo->id, PHILO_MSG_02);
-		else if (msg_code == 3)
-			printf("%lld %d %s", tstamp, philo->id, PHILO_MSG_03);
-		else if (msg_code == 4)
-			printf("%lld %d %s", tstamp, philo->id, PHILO_MSG_04);
-		else if (msg_code == 5)
-			printf("%lld %d %s", tstamp, philo->id, PHILO_MSG_05);
-		else
-			ft_putstr(PHILO_MSG_00);
-	}
-	if (pthread_mutex_unlock(&philo->data->notifier))
-		return (print_error(12), rise_simulation_endflag(philo->data), 1);
-	return (0);
-}
-
-void	custom_usleep(long long sleep_time)
-{
-	long long	start;
-	
-	start= get_current_timestamp();
-	while ((get_current_timestamp() - start) < sleep_time)
-		usleep(CUSTOM_USLEEP_TIME);
-}
-
-int	rise_simulation_endflag(t_data *d)
-{
-	if (pthread_mutex_lock(&d->updater) != 0)
-		return (print_error(11), 1);
-	d->end_simulation = 1;
-	if (pthread_mutex_unlock(&d->updater))
-		return (print_error(12), 1);
-	return (0);
-}
-
-int	is_simulation_endflag_rised(t_data *d)
-{
-	int	is_rised;
-
-	if (pthread_mutex_lock(&d->updater) != 0)
-		return (print_error(11), 1);
-	is_rised = (1 == d->end_simulation);
-	if (pthread_mutex_unlock(&d->updater))
-		return (print_error(12), 1);
-	return (is_rised);
 }
