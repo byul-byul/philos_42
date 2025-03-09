@@ -6,7 +6,7 @@
 /*   By: bhajili <bhajili@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 13:28:52 by bhajili           #+#    #+#             */
-/*   Updated: 2025/03/09 14:11:35 by bhajili          ###   ########.fr       */
+/*   Updated: 2025/03/09 17:30:28 by bhajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void	custom_usleep(t_data *data, long long sleep_time)
 {
 	long long	start;
 
+	data += 0;
 	start = get_current_timestamp();
 	while ((get_current_timestamp() - start) < sleep_time)
 	{

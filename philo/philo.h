@@ -6,7 +6,7 @@
 /*   By: bhajili <bhajili@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 09:31:38 by bhajili           #+#    #+#             */
-/*   Updated: 2025/03/09 14:10:20 by bhajili          ###   ########.fr       */
+/*   Updated: 2025/03/09 17:45:26 by bhajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 # define MAX_ARG_COUNT		5
 # define MAX_PHILO_COUNT	200
 # define MIN_MSEC_VALUE		60
-# define MIN_USLEEP_TIME	500
+# define MIN_USLEEP_TIME	21
 
 # define PHILO_MSG_00	"unknown action\n"
 # define PHILO_MSG_01	"has taken a fork\n"

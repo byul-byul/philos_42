@@ -6,7 +6,7 @@
 /*   By: bhajili <bhajili@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 13:18:33 by bhajili           #+#    #+#             */
-/*   Updated: 2025/03/09 14:07:54 by bhajili          ###   ########.fr       */
+/*   Updated: 2025/03/09 17:45:45 by bhajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,9 @@ static void	finish_simulation(t_data *d, int size)
 
 static void	monitor_simulation(t_data *d)
 {
-	int		i;
-	t_philo	*philo;
+	int			i;
+	t_philo		*philo;
+	long long	current_time;
 
 	while (0 == is_simulation_endflag_rised(d))
 	{
@@ -59,10 +60,11 @@ static void	monitor_simulation(t_data *d)
 		while (++i < d->philo_count)
 		{
 			philo = &d->philo_list[i];
-			if ((get_current_timestamp() - philo->last_meal_time) > d->die_time)
+			current_time = get_current_timestamp();
+			if ((current_time - philo->last_meal_time) > d->die_time)
 			{
 				rise_simulation_endflag(d);
-				print_philo_action(philo, get_current_timestamp(), 5);
+				print_philo_action(philo, current_time, 5);
 				break ;
 			}
 			if (d->finished_philo_count >= d->philo_count)
