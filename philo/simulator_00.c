@@ -6,7 +6,7 @@
 /*   By: bhajili <bhajili@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 13:18:33 by bhajili           #+#    #+#             */
-/*   Updated: 2025/03/09 13:48:06 by bhajili          ###   ########.fr       */
+/*   Updated: 2025/03/09 14:07:54 by bhajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void	*simulate_lonely_philo(void *arg)
 		return (NULL);
 	pthread_mutex_lock(&philo->left->mutex);
 	print_philo_action(philo, get_current_timestamp(), 1);
-	custom_usleep(philo->data->die_time);
+	custom_usleep(philo->data, philo->data->die_time);
 	print_philo_action(philo, get_current_timestamp(), 5);
 	pthread_mutex_unlock(&philo->left->mutex);
 	return (NULL);

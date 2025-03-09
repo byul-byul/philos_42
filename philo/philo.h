@@ -6,7 +6,7 @@
 /*   By: bhajili <bhajili@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 09:31:38 by bhajili           #+#    #+#             */
-/*   Updated: 2025/03/09 13:50:07 by bhajili          ###   ########.fr       */
+/*   Updated: 2025/03/09 14:10:20 by bhajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ int			ft_is_integer(const char *str);
 int			ft_atoi(const char *str);
 long long	ft_atoll(const char *str);
 void		print_philo_action(t_philo *philo, long long tstamp, int msg_code);
-void		custom_usleep(long long sleep_time);
+void		custom_usleep(t_data *data, long long sleep_time);
 void		rise_simulation_endflag(t_data *d);
 int			is_simulation_endflag_rised(t_data *d);
 void		take_fork(t_philo *philo, int order);

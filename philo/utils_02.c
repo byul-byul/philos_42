@@ -6,7 +6,7 @@
 /*   By: bhajili <bhajili@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 13:28:52 by bhajili           #+#    #+#             */
-/*   Updated: 2025/03/09 13:30:45 by bhajili          ###   ########.fr       */
+/*   Updated: 2025/03/09 14:11:35 by bhajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,17 @@ void	print_philo_action(t_philo *philo, long long tstamp, int msg_code)
 	pthread_mutex_unlock(&philo->data->notifier);
 }
 
-void	custom_usleep(long long sleep_time)
+void	custom_usleep(t_data *data, long long sleep_time)
 {
 	long long	start;
 
 	start = get_current_timestamp();
 	while ((get_current_timestamp() - start) < sleep_time)
+	{
+		if (is_simulation_endflag_rised(data))
+			break ;
 		usleep(MIN_USLEEP_TIME);
+	}
 }
 
 void	rise_simulation_endflag(t_data *d)

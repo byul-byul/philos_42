@@ -6,7 +6,7 @@
 /*   By: bhajili <bhajili@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 15:00:58 by bhajili           #+#    #+#             */
-/*   Updated: 2025/03/08 02:18:46 by bhajili          ###   ########.fr       */
+/*   Updated: 2025/03/09 14:05:12 by bhajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@ static void	init_philo(t_data *d, int i, t_fork *left, t_fork *right)
 	d->philo_list[i].id = i + 1;
 	d->philo_list[i].left = left;
 	d->philo_list[i].right = right;
-	d->philo_list[i].left->mutex = left->mutex;
-	d->philo_list[i].right->mutex = right->mutex;
 	d->philo_list[i].data = d;
 	d->philo_list[i].meal_count = 0;
 }

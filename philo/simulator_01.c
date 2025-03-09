@@ -6,7 +6,7 @@
 /*   By: bhajili <bhajili@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 13:18:33 by bhajili           #+#    #+#             */
-/*   Updated: 2025/03/09 13:50:58 by bhajili          ###   ########.fr       */
+/*   Updated: 2025/03/09 14:09:34 by bhajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static int	simulate_sleeping(t_philo *philo)
 	if (is_simulation_endflag_rised(philo->data))
 		return (1);
 	print_philo_action(philo, get_current_timestamp(), 3);
-	custom_usleep(philo->data->sleep_time);
+	custom_usleep(philo->data, philo->data->sleep_time);
 	return (0);
 }
 
@@ -37,13 +37,7 @@ static int	start_eating(t_philo *philo)
 	philo->last_meal_time = get_current_timestamp();
 	pthread_mutex_unlock(&philo->data->updater);
 	print_philo_action(philo, get_current_timestamp(), 2);
-	while (philo->data->eat_time > \
-			(get_current_timestamp() - philo->last_meal_time))
-	{
-		if (is_simulation_endflag_rised(philo->data))
-			return (drop_forks(philo), 1);
-		usleep(MIN_USLEEP_TIME);
-	}
+	custom_usleep(philo->data, philo->data->eat_time);
 	pthread_mutex_lock(&philo->data->updater);
 	philo->meal_count += 1;
 	if (philo->data->eat_count != -1 && \
