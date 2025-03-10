@@ -6,7 +6,7 @@
 #    By: bhajili <bhajili@student.42abudhabi.ae>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/04 10:36:52 by bhajili           #+#    #+#              #
-#    Updated: 2025/03/10 06:40:21 by bhajili          ###   ########.fr        #
+#    Updated: 2025/03/10 06:57:12 by bhajili          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,7 @@ SRCS    =   $(D_SRC)main.c \
 			$(D_SRC)initializator.c \
 			$(D_SRC)simulator_00.c \
 			$(D_SRC)simulator_01.c \
+			$(D_SRC)simulator_02.c \
 			$(D_SRC)cleaner.c \
 			$(D_SRC)utils_00.c \
 			$(D_SRC)utils_01.c \

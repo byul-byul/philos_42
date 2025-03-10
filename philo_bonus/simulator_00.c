@@ -6,7 +6,7 @@
 /*   By: bhajili <bhajili@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 13:18:33 by bhajili           #+#    #+#             */
-/*   Updated: 2025/03/10 06:34:43 by bhajili          ###   ########.fr       */
+/*   Updated: 2025/03/10 08:31:04 by bhajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,30 +50,23 @@ static void	finish_simulation(t_data *d, int size)
 
 static void	*monitor_simulation(void *arg)
 {
-	int			i;
 	t_philo		*philo;
-	t_data 		*d;
 	long long	current_time;
 
-	d = (t_data *)arg;
-	while (0 == is_simulation_endflag_rised(d))
+	philo = (t_philo *)arg;
+	while (0 == is_simulation_endflag_rised(philo->data))
 	{
-		i = -1;
-		while (++i < d->philo_count)
+		current_time = get_current_timestamp();
+		if ((current_time - philo->last_meal_time) > philo->data->die_time)
 		{
-			philo = &d->philo_list[i];
-			current_time = get_current_timestamp();
-			if ((current_time - philo->last_meal_time) > d->die_time)
-			{
-				rise_simulation_endflag(d);
-				print_philo_action(philo, current_time, 5);
-				break ;
-			}
-			if (d->finished_philo_count >= d->philo_count)
-			{
-				rise_simulation_endflag(d);
-				break ;
-			}
+			rise_simulation_endflag(philo->data);
+			print_philo_action(philo, current_time, 5);
+			break ;
+		}
+		if (philo->data->eat_count >= philo->meal_count)
+		{
+			rise_simulation_endflag(philo->data);
+			break ;
 		}
 		usleep(MIN_USLEEP_TIME);
 	}
@@ -99,7 +92,7 @@ int	do_simulation(t_data *d)
 			return (rise_simulation_endflag(d), finish_simulation(d, i), 11);
 		if (philo->pid == 0)
 		{
-			if (pthread_create(&philo->thread, NULL, monitor_simulation, d))
+			if (pthread_create(&philo->thread, NULL, monitor_simulation, philo))
 				return (rise_simulation_endflag(d), finish_simulation(d, i), 12);
 			pthread_detach(philo->thread);
 			simulate_philo(philo);

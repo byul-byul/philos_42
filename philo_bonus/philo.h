@@ -6,7 +6,7 @@
 /*   By: bhajili <bhajili@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 09:31:38 by bhajili           #+#    #+#             */
-/*   Updated: 2025/03/10 06:33:05 by bhajili          ###   ########.fr       */
+/*   Updated: 2025/03/10 07:05:47 by bhajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ void		rise_simulation_endflag(t_data *d);
 int			is_simulation_endflag_rised(t_data *d);
 void		take_fork(t_philo *philo);
 void		drop_fork(t_philo *philo);
+void		take_forks(t_philo *philo);
 void		drop_forks(t_philo *philo);
 void		*simulate_philo(void *arg);
 

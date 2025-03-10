@@ -6,7 +6,7 @@
 /*   By: bhajili <bhajili@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 13:18:33 by bhajili           #+#    #+#             */
-/*   Updated: 2025/03/10 06:39:35 by bhajili          ###   ########.fr       */
+/*   Updated: 2025/03/10 07:06:01 by bhajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,7 @@ static int	simulate_sleeping(t_philo *philo)
 static int	start_eating(t_philo *philo)
 {
 	if (is_simulation_endflag_rised(philo->data))
-		return (sem_post(philo->data->fork_list), \
-				sem_post(philo->data->fork_list), 1);
+		return (drop_forks(philo), 1);
 	sem_wait(philo->data->updater);
 	philo->last_meal_time = get_current_timestamp();
 	philo->meal_count += 1;
@@ -50,18 +49,12 @@ static int	simulate_eating(t_philo *philo)
 {
 	if (is_simulation_endflag_rised(philo->data))
 		return (1);
-	sem_wait(philo->data->fork_list);
+	take_forks(philo);
 	if (is_simulation_endflag_rised(philo->data))
-		return (sem_post(philo->data->fork_list), 1);
-	sem_wait(philo->data->fork_list);
-	if (is_simulation_endflag_rised(philo->data))
-		return (sem_post(philo->data->fork_list), \
-				sem_post(philo->data->fork_list), 1);
+		return (drop_forks(philo), 1);
 	if (start_eating(philo))
-		return (sem_post(philo->data->fork_list), \
-				sem_post(philo->data->fork_list), 1);
-	return (sem_post(philo->data->fork_list), \
-				sem_post(philo->data->fork_list), 0);
+		return (drop_forks(philo), 1);
+	return (drop_forks(philo), 0);
 }
 
 void	*simulate_philo(void *arg)
