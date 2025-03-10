@@ -6,7 +6,7 @@
 /*   By: bhajili <bhajili@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 13:18:33 by bhajili           #+#    #+#             */
-/*   Updated: 2025/03/09 17:27:46 by bhajili          ###   ########.fr       */
+/*   Updated: 2025/03/10 06:39:35 by bhajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,15 @@ static int	simulate_sleeping(t_philo *philo)
 static int	start_eating(t_philo *philo)
 {
 	if (is_simulation_endflag_rised(philo->data))
-		return (drop_forks(philo), 1);
-	pthread_mutex_lock(&philo->data->updater);
+		return (sem_post(philo->data->fork_list), \
+				sem_post(philo->data->fork_list), 1);
+	sem_wait(philo->data->updater);
 	philo->last_meal_time = get_current_timestamp();
 	philo->meal_count += 1;
 	if (philo->data->eat_count != -1 && \
 		philo->meal_count >= philo->data->eat_count)
 		philo->data->finished_philo_count++;
-	pthread_mutex_unlock(&philo->data->updater);
+	sem_post(philo->data->updater);
 	print_philo_action(philo, get_current_timestamp(), 2);
 	custom_usleep(philo->data, philo->data->eat_time);
 	return (0);
@@ -49,15 +50,18 @@ static int	simulate_eating(t_philo *philo)
 {
 	if (is_simulation_endflag_rised(philo->data))
 		return (1);
-	take_fork(philo, 0);
+	sem_wait(philo->data->fork_list);
 	if (is_simulation_endflag_rised(philo->data))
-		return (drop_fork(philo, 0), 1);
-	take_fork(philo, 1);
+		return (sem_post(philo->data->fork_list), 1);
+	sem_wait(philo->data->fork_list);
 	if (is_simulation_endflag_rised(philo->data))
-		return (drop_forks(philo), 1);
+		return (sem_post(philo->data->fork_list), \
+				sem_post(philo->data->fork_list), 1);
 	if (start_eating(philo))
-		return (drop_forks(philo), 1);
-	return (drop_forks(philo), 0);
+		return (sem_post(philo->data->fork_list), \
+				sem_post(philo->data->fork_list), 1);
+	return (sem_post(philo->data->fork_list), \
+				sem_post(philo->data->fork_list), 0);
 }
 
 void	*simulate_philo(void *arg)

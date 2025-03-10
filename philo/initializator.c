@@ -6,7 +6,7 @@
 /*   By: bhajili <bhajili@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 15:00:58 by bhajili           #+#    #+#             */
-/*   Updated: 2025/03/09 14:05:12 by bhajili          ###   ########.fr       */
+/*   Updated: 2025/03/09 21:02:30 by bhajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static void	init_philo_list(t_data *d)
 		init_philo(d, i, &d->fork_list[i - 1], &d->fork_list[i]);
 }
 
-static int	init_fork_list(t_data *d)
+static int	init_program_mutexes(t_data *d)
 {
 	int	i;
 
@@ -76,7 +76,7 @@ int	init_data(t_data *d)
 	else if (d->philo_list && d->fork_list)
 	{
 		d->has_allocated_memory = 1;
-		error_code = init_fork_list(d);
+		error_code = init_program_mutexes(d);
 		if (0 != error_code)
 			return (error_code);
 		d->has_active_mutex = 1;

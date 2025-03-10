@@ -6,38 +6,38 @@
 /*   By: bhajili <bhajili@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 13:18:33 by bhajili           #+#    #+#             */
-/*   Updated: 2025/03/09 17:53:22 by bhajili          ###   ########.fr       */
+/*   Updated: 2025/03/10 06:34:43 by bhajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static void	*simulate_lonely_philo(void *arg)
-{
-	t_philo		*philo;
+// static void	*simulate_lonely_philo(void *arg)
+// {
+// 	t_philo		*philo;
 
-	philo = (t_philo *)arg;
-	if (is_simulation_endflag_rised(philo->data))
-		return (NULL);
-	pthread_mutex_lock(&philo->left->mutex);
-	print_philo_action(philo, get_current_timestamp(), 1);
-	custom_usleep(philo->data, philo->data->die_time);
-	print_philo_action(philo, get_current_timestamp(), 5);
-	pthread_mutex_unlock(&philo->left->mutex);
-	return (NULL);
-}
+// 	philo = (t_philo *)arg;
+// 	if (is_simulation_endflag_rised(philo->data))
+// 		return (NULL);
+// 	sem_wait(philo->data->fork_list);
+// 	print_philo_action(philo, get_current_timestamp(), 1);
+// 	custom_usleep(philo->data, philo->data->die_time);
+// 	print_philo_action(philo, get_current_timestamp(), 5);
+// 	sem_post(philo->data->fork_list);
+// 	return (NULL);
+// }
 
-static int	handle_lonely_philo(t_data *d)
-{
-	if (pthread_create(&d->philo_list[0].thread, NULL, \
-		simulate_lonely_philo, &d->philo_list[0]))
-	{
-		print_error(11);
-		d->end_simulation = 1;
-		return (1);
-	}
-	return (pthread_join(d->philo_list[0].thread, NULL), 0);
-}
+// static int	handle_lonely_philo(t_data *d)
+// {
+// 	if (pthread_create(&d->philo_list[0].thread, NULL, 
+// 		simulate_lonely_philo, &d->philo_list[0]))
+// 	{
+// 		print_error(11);
+// 		d->end_simulation = 1;
+// 		return (1);
+// 	}
+// 	return (pthread_join(d->philo_list[0].thread, NULL), 0);
+// }
 
 static void	finish_simulation(t_data *d, int size)
 {
@@ -45,15 +45,17 @@ static void	finish_simulation(t_data *d, int size)
 
 	i = -1;
 	while (++i < size)
-		pthread_join(d->philo_list[i].thread, NULL);
+		waitpid(d->philo_list[i].pid, NULL, 0);
 }
 
-static void	monitor_simulation(t_data *d)
+static void	*monitor_simulation(void *arg)
 {
 	int			i;
 	t_philo		*philo;
+	t_data 		*d;
 	long long	current_time;
 
+	d = (t_data *)arg;
 	while (0 == is_simulation_endflag_rised(d))
 	{
 		i = -1;
@@ -75,6 +77,7 @@ static void	monitor_simulation(t_data *d)
 		}
 		usleep(MIN_USLEEP_TIME);
 	}
+	return (NULL);
 }
 
 int	do_simulation(t_data *d)
@@ -83,18 +86,26 @@ int	do_simulation(t_data *d)
 	t_philo		*philo;
 	long long	simulation_start_time;
 
-	if (d->philo_count == 1)
-		return (handle_lonely_philo(d));
+	// if (d->philo_count == 1)
+	// 	return (handle_lonely_philo(d));
 	i = -1;
 	simulation_start_time = get_current_timestamp();
 	while (++i < d->philo_count)
 	{
 		philo = &d->philo_list[i];
 		philo->last_meal_time = simulation_start_time;
-		if (pthread_create(&philo->thread, NULL, simulate_philo, philo))
+		philo->pid = fork();
+		if (philo->pid < 0)
 			return (rise_simulation_endflag(d), finish_simulation(d, i), 11);
+		if (philo->pid == 0)
+		{
+			if (pthread_create(&philo->thread, NULL, monitor_simulation, d))
+				return (rise_simulation_endflag(d), finish_simulation(d, i), 12);
+			pthread_detach(philo->thread);
+			simulate_philo(philo);
+			exit(0);
+		}
 	}
-	monitor_simulation(d);
 	finish_simulation(d, d->philo_count);
 	return (0);
 }

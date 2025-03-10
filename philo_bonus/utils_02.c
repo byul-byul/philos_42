@@ -6,7 +6,7 @@
 /*   By: bhajili <bhajili@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 13:28:52 by bhajili           #+#    #+#             */
-/*   Updated: 2025/03/09 17:30:28 by bhajili          ###   ########.fr       */
+/*   Updated: 2025/03/10 06:36:19 by bhajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ long long	get_current_timestamp(void)
 
 void	print_philo_action(t_philo *philo, long long tstamp, int msg_code)
 {
-	pthread_mutex_lock(&philo->data->notifier);
+	sem_wait(philo->data->notifier);
 	if (is_simulation_endflag_rised(philo->data) && msg_code == 5)
 		printf("%lld %d %s", tstamp, philo->id, PHILO_MSG_05);
 	if (0 == is_simulation_endflag_rised(philo->data))
@@ -40,7 +40,7 @@ void	print_philo_action(t_philo *philo, long long tstamp, int msg_code)
 		else
 			printf(PHILO_MSG_00);
 	}
-	pthread_mutex_unlock(&philo->data->notifier);
+	sem_post(philo->data->notifier);
 }
 
 void	custom_usleep(t_data *data, long long sleep_time)
@@ -59,17 +59,17 @@ void	custom_usleep(t_data *data, long long sleep_time)
 
 void	rise_simulation_endflag(t_data *d)
 {
-	pthread_mutex_lock(&d->updater);
+	sem_wait(d->updater);
 	d->end_simulation = 1;
-	pthread_mutex_unlock(&d->updater);
+	sem_post(d->updater);
 }
 
 int	is_simulation_endflag_rised(t_data *d)
 {
 	int	is_rised;
 
-	pthread_mutex_lock(&d->updater);
+	sem_wait(d->updater);
 	is_rised = (1 == d->end_simulation);
-	pthread_mutex_unlock(&d->updater);
+	sem_post(d->updater);
 	return (is_rised);
 }

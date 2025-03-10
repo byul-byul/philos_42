@@ -6,7 +6,7 @@
 /*   By: bhajili <bhajili@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 09:31:38 by bhajili           #+#    #+#             */
-/*   Updated: 2025/03/09 17:45:26 by bhajili          ###   ########.fr       */
+/*   Updated: 2025/03/10 06:33:05 by bhajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,12 @@
 # include <stdio.h>
 # include <pthread.h>
 # include <sys/time.h>
+# include <semaphore.h>
+# include <fcntl.h>
+# include <sys/wait.h>
 
-# define MAX_INT			2147483647
-# define MIN_INT			-2147483648
+# define MAX_INT	2147483647
+# define MIN_INT	-2147483648
 
 # define TRUE				1
 # define FALSE				0
@@ -30,6 +33,10 @@
 # define MAX_PHILO_COUNT	200
 # define MIN_MSEC_VALUE		60
 # define MIN_USLEEP_TIME	21
+
+# define SEM_NAME_00	"/fork_list"
+# define SEM_NAME_01	"/updater"
+# define SEM_NAME_02	"/notifier"
 
 # define PHILO_MSG_00	"unknown action\n"
 # define PHILO_MSG_01	"has taken a fork\n"
@@ -48,43 +55,36 @@
 # define ERR_MSG_07	"ERROR: data validation: \'time_to_sleep\' must be >60.\n"
 # define ERR_MSG_08	"ERROR: data validation: \'eat_count\' must be >0.\n"
 # define ERR_MSG_09	"ERROR: data initialization: malloc() failed.\n"
-# define ERR_MSG_10	"ERROR: data initialization: pthread_mutex_init() failed.\n"
-# define ERR_MSG_11	"ERROR: simulation: pthread_create() failed.\n"
+# define ERR_MSG_10	"ERROR: data initialization: sem_open() failed.\n"
+# define ERR_MSG_11	"ERROR: simulation: fork() failed.\n"
+# define ERR_MSG_12	"ERROR: simulation: pthread_create() failed.\n"
 
 typedef struct s_data	t_data;
-
-typedef struct s_fork
-{
-	int				id;
-	pthread_mutex_t	mutex;
-}				t_fork;
 
 typedef struct s_philo
 {
 	int				id;
+	pid_t			pid;
 	pthread_t		thread;
 	long long		last_meal_time;
 	int				meal_count;
-	t_fork			*left;
-	t_fork			*right;
 	t_data			*data;
 }				t_philo;
 
 typedef struct s_data
 {
-	int				has_allocated_memory;
-	int				has_active_mutex;
-	int				end_simulation;
-	int				finished_philo_count;
-	int				philo_count;
-	int				eat_count;
-	long long		die_time;
-	long long		eat_time;
-	long long		sleep_time;
-	t_philo			*philo_list;
-	t_fork			*fork_list;
-	pthread_mutex_t	notifier;
-	pthread_mutex_t	updater;
+	int			has_allocated_memory;
+	int			end_simulation;
+	int			finished_philo_count;
+	int			philo_count;
+	int			eat_count;
+	long long	die_time;
+	long long	eat_time;
+	long long	sleep_time;
+	t_philo		*philo_list;
+	sem_t		*fork_list;
+	sem_t		*notifier;
+	sem_t		*updater;
 }				t_data;
 
 int			philo(int ac, char **av);
@@ -93,7 +93,6 @@ int			parse_arg(int ac, char **av, t_data *data);
 int			validate_data(int ac, t_data *data);
 int			init_data(t_data *data);
 int			do_simulation(t_data *d);
-void		destroy_mutex_list(t_data *d, int size);
 void		clean_data(t_data *d);
 void		print_error(int error_code);
 long long	get_current_timestamp(void);
@@ -105,8 +104,8 @@ void		print_philo_action(t_philo *philo, long long tstamp, int msg_code);
 void		custom_usleep(t_data *data, long long sleep_time);
 void		rise_simulation_endflag(t_data *d);
 int			is_simulation_endflag_rised(t_data *d);
-void		take_fork(t_philo *philo, int order);
-void		drop_fork(t_philo *philo, int order);
+void		take_fork(t_philo *philo);
+void		drop_fork(t_philo *philo);
 void		drop_forks(t_philo *philo);
 void		*simulate_philo(void *arg);
 
