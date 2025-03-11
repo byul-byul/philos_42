@@ -6,7 +6,7 @@
 /*   By: bhajili <bhajili@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 15:00:58 by bhajili           #+#    #+#             */
-/*   Updated: 2025/03/09 21:02:30 by bhajili          ###   ########.fr       */
+/*   Updated: 2025/03/11 09:37:56 by bhajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,11 @@ static void	init_philo_list(t_data *d)
 
 	i = 0;
 	n = d->philo_count;
+	if (n == 1)
+	{
+		init_philo(d, i, &d->fork_list[i], &d->fork_list[i]);
+		return ;
+	}
 	init_philo(d, i, &d->fork_list[n - 1], &d->fork_list[i]);
 	init_philo(d, n - 1, &d->fork_list[n - 2], &d->fork_list[n - 1]);
 	while (++i < n - 1)
