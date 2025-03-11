@@ -6,7 +6,7 @@
 /*   By: bhajili <bhajili@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 09:31:38 by bhajili           #+#    #+#             */
-/*   Updated: 2025/03/10 07:05:47 by bhajili          ###   ########.fr       */
+/*   Updated: 2025/03/11 09:45:29 by bhajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ typedef struct s_philo
 typedef struct s_data
 {
 	int			has_allocated_memory;
+	int			has_semaphores;
 	int			end_simulation;
 	int			finished_philo_count;
 	int			philo_count;

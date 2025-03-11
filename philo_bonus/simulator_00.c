@@ -6,38 +6,11 @@
 /*   By: bhajili <bhajili@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 13:18:33 by bhajili           #+#    #+#             */
-/*   Updated: 2025/03/10 08:31:04 by bhajili          ###   ########.fr       */
+/*   Updated: 2025/03/11 11:46:47 by bhajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-// static void	*simulate_lonely_philo(void *arg)
-// {
-// 	t_philo		*philo;
-
-// 	philo = (t_philo *)arg;
-// 	if (is_simulation_endflag_rised(philo->data))
-// 		return (NULL);
-// 	sem_wait(philo->data->fork_list);
-// 	print_philo_action(philo, get_current_timestamp(), 1);
-// 	custom_usleep(philo->data, philo->data->die_time);
-// 	print_philo_action(philo, get_current_timestamp(), 5);
-// 	sem_post(philo->data->fork_list);
-// 	return (NULL);
-// }
-
-// static int	handle_lonely_philo(t_data *d)
-// {
-// 	if (pthread_create(&d->philo_list[0].thread, NULL, 
-// 		simulate_lonely_philo, &d->philo_list[0]))
-// 	{
-// 		print_error(11);
-// 		d->end_simulation = 1;
-// 		return (1);
-// 	}
-// 	return (pthread_join(d->philo_list[0].thread, NULL), 0);
-// }
 
 static void	finish_simulation(t_data *d, int size)
 {
@@ -73,14 +46,47 @@ static void	*monitor_simulation(void *arg)
 	return (NULL);
 }
 
+static void	*simulate_lonely_philo(void *arg)
+{
+	t_philo		*philo;
+
+	philo = (t_philo *)arg;
+	if (is_simulation_endflag_rised(philo->data))
+		return (NULL);
+	sem_wait(philo->data->fork_list);
+	print_philo_action(philo, get_current_timestamp(), 1);
+	custom_usleep(philo->data, philo->data->die_time);
+	print_philo_action(philo, get_current_timestamp(), 5);
+	sem_post(philo->data->fork_list);
+	return (NULL);
+}
+
+static int	handle_lonely_philo(t_data *d)
+{
+	t_philo		*philo;
+
+	philo = &d->philo_list[0];
+	philo->last_meal_time = get_current_timestamp();
+	philo->pid = fork();
+	if (philo->pid < 0)
+		return (11);
+	if (philo->pid == 0)
+	{
+		simulate_lonely_philo(philo);
+		exit(0);
+	}
+	finish_simulation(d, d->philo_count);
+	return (0);
+}
+
 int	do_simulation(t_data *d)
 {
 	int			i;
 	t_philo		*philo;
 	long long	simulation_start_time;
 
-	// if (d->philo_count == 1)
-	// 	return (handle_lonely_philo(d));
+	if (d->philo_count == 1)
+		return (handle_lonely_philo(d));
 	i = -1;
 	simulation_start_time = get_current_timestamp();
 	while (++i < d->philo_count)
