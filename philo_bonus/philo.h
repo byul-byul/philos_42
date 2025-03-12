@@ -6,7 +6,7 @@
 /*   By: bhajili <bhajili@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 09:31:38 by bhajili           #+#    #+#             */
-/*   Updated: 2025/03/11 09:45:29 by bhajili          ###   ########.fr       */
+/*   Updated: 2025/03/11 15:42:40 by bhajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@
 # define SEM_NAME_00	"/fork_list"
 # define SEM_NAME_01	"/updater"
 # define SEM_NAME_02	"/notifier"
+# define SEM_NAME_03	"/end_simulation"
 
 # define PHILO_MSG_00	"unknown action\n"
 # define PHILO_MSG_01	"has taken a fork\n"
@@ -75,7 +76,6 @@ typedef struct s_data
 {
 	int			has_allocated_memory;
 	int			has_semaphores;
-	int			end_simulation;
 	int			finished_philo_count;
 	int			philo_count;
 	int			eat_count;
@@ -86,6 +86,7 @@ typedef struct s_data
 	sem_t		*fork_list;
 	sem_t		*notifier;
 	sem_t		*updater;
+	sem_t		*end_simulation;
 }				t_data;
 
 int			philo(int ac, char **av);

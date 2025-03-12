@@ -6,7 +6,7 @@
 /*   By: bhajili <bhajili@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 16:03:40 by bhajili           #+#    #+#             */
-/*   Updated: 2025/03/11 09:49:25 by bhajili          ###   ########.fr       */
+/*   Updated: 2025/03/11 16:00:36 by bhajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,11 @@ void	close_semaphores(t_data *d)
 		sem_close(d->fork_list);
 		sem_close(d->updater);
 		sem_close(d->notifier);
+		sem_close(d->end_simulation);
 		sem_unlink(SEM_NAME_00);
 		sem_unlink(SEM_NAME_01);
 		sem_unlink(SEM_NAME_02);
+		sem_unlink(SEM_NAME_03);
 	}
 }
 

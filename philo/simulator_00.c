@@ -6,7 +6,7 @@
 /*   By: bhajili <bhajili@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 13:18:33 by bhajili           #+#    #+#             */
-/*   Updated: 2025/03/11 09:30:24 by bhajili          ###   ########.fr       */
+/*   Updated: 2025/03/11 15:49:40 by bhajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ static void	*simulate_lonely_philo(void *arg)
 
 static int	handle_lonely_philo(t_data *d)
 {
-	
 	if (pthread_create(&d->philo_list[0].thread, NULL, \
 		simulate_lonely_philo, &d->philo_list[0]))
 	{

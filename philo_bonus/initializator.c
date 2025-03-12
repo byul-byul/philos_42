@@ -6,7 +6,7 @@
 /*   By: bhajili <bhajili@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 15:00:58 by bhajili           #+#    #+#             */
-/*   Updated: 2025/03/11 10:07:08 by bhajili          ###   ########.fr       */
+/*   Updated: 2025/03/11 15:50:23 by bhajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,12 @@ static int	init_program_semaphores(t_data *d)
 		return (sem_close(d->fork_list), sem_unlink(SEM_NAME_00), \
 				sem_close(d->updater), sem_unlink(SEM_NAME_01), 10);
 	sem_unlink(SEM_NAME_02);
+	d->end_simulation = sem_open(SEM_NAME_03, O_CREAT, S_IWUSR, 0);
+	if (SEM_FAILED == d->end_simulation)
+		return (sem_close(d->fork_list), sem_unlink(SEM_NAME_00), \
+				sem_close(d->updater), sem_unlink(SEM_NAME_01), \
+				sem_close(d->notifier), sem_unlink(SEM_NAME_02), 10);
+	sem_unlink(SEM_NAME_03);
 	return (0);
 }
 
@@ -41,7 +47,6 @@ static void	init_simple_data_fields(t_data *d)
 {
 	d->has_allocated_memory = 0;
 	d->has_semaphores = 0;
-	d->end_simulation = 0;
 	d->finished_philo_count = 0;
 }
 

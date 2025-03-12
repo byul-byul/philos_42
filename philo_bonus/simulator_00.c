@@ -6,7 +6,7 @@
 /*   By: bhajili <bhajili@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 13:18:33 by bhajili           #+#    #+#             */
-/*   Updated: 2025/03/11 11:46:47 by bhajili          ###   ########.fr       */
+/*   Updated: 2025/03/12 05:56:42 by bhajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,15 +96,13 @@ int	do_simulation(t_data *d)
 		philo->pid = fork();
 		if (philo->pid < 0)
 			return (rise_simulation_endflag(d), finish_simulation(d, i), 11);
-		if (philo->pid == 0)
-		{
-			if (pthread_create(&philo->thread, NULL, monitor_simulation, philo))
-				return (rise_simulation_endflag(d), finish_simulation(d, i), 12);
-			pthread_detach(philo->thread);
-			simulate_philo(philo);
-			exit(0);
-		}
+		if (philo->pid != 0)
+			continue ;
+		if (pthread_create(&philo->thread, NULL, monitor_simulation, philo))
+			return (rise_simulation_endflag(d), finish_simulation(d, i), 12);
+		pthread_detach(philo->thread);
+		simulate_philo(philo);
+		exit(0);
 	}
-	finish_simulation(d, d->philo_count);
-	return (0);
+	return (finish_simulation(d, d->philo_count), 0);
 }

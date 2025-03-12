@@ -6,7 +6,7 @@
 /*   By: bhajili <bhajili@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 13:28:52 by bhajili           #+#    #+#             */
-/*   Updated: 2025/03/10 06:36:19 by bhajili          ###   ########.fr       */
+/*   Updated: 2025/03/12 05:54:42 by bhajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,17 +59,13 @@ void	custom_usleep(t_data *data, long long sleep_time)
 
 void	rise_simulation_endflag(t_data *d)
 {
-	sem_wait(d->updater);
-	d->end_simulation = 1;
-	sem_post(d->updater);
+	sem_post(d->end_simulation);
 }
 
 int	is_simulation_endflag_rised(t_data *d)
 {
-	int	is_rised;
+	int	sem_value;
 
-	sem_wait(d->updater);
-	is_rised = (1 == d->end_simulation);
-	sem_post(d->updater);
-	return (is_rised);
+	sem_getvalue(d->end_simulation, &sem_value);
+	return (sem_value > 0);
 }
