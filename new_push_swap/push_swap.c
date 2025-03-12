@@ -6,88 +6,87 @@
 /*   By: bhajili <bhajili@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 12:26:16 by bhajili           #+#    #+#             */
-/*   Updated: 2025/03/12 12:23:07 by bhajili          ###   ########.fr       */
+/*   Updated: 2025/03/12 13:08:31 by bhajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-// static int	sort_three(t_data *d, int stack_type)
-// {
-// 	int		a;
-// 	int		b;
-// 	int		c;
-// 	t_stack	*stack;
+static void	sort_three(t_data *d, int stack_type)
+{
+	int		a;
+	int		b;
+	int		c;
+	t_stack	*stack;
 
-// 	stack = tmp_a;
-// 	if (stack_type == STACK_B)
-// 		stack = tmp_b;
-// 	a = stack->value;
-// 	b = stack->next->value;
-// 	c = stack->next->next->value;
-// 	if (a > b && a > c)
-// 	{
-// 		rotate_wrapper(d, stack_type);
-// 		if (stack->value > stack->next->value)
-// 			swap_wrapper(d, stack_type);
-// 	}
-// 	else if (b > a && b > c)
-// 	{
-// 		rev_rotate_wrapper(d, stack_type);
-// 		if (stack->value > stack->next->value)
-// 			swap_wrapper(d, stack_type);
-// 	}
-// 	else if (a > b)
-// 		swap_wrapper(d, stack_type);
-// }
+	stack = d->a;
+	if (stack_type == STACK_B)
+		stack = d->b;
+	a = stack->value;
+	b = stack->next->value;
+	c = stack->next->next->value;
+	if (a > b && a > c)
+	{
+		rotate_wrapper(d, stack_type);
+		if (b > c)
+			swap_wrapper(d, stack_type);
+	}
+	else if (b > a && b > c)
+	{
+		rev_rotate_wrapper(d, stack_type);
+		if (c > a)
+			swap_wrapper(d, stack_type);
+	}
+	else if (a > b)
+		swap_wrapper(d, stack_type);
+}
 
-// static void	simplesort(t_data *d, int stack_type)
-// {
-// 	int		minindex;
-// 	int		size;
-// 	t_stack	*stack;
+static void	simplesort(t_data *d, int stack_type)
+{
+	int		minindex;
+	int		size;
+	t_stack	*stack;
 
-// 	stack = tmp_a;
-// 	size = d->size_a;
-// 	if (stack_type == STACK_B)
-// 	{
-// 		stack = tmp_b;
-// 		size = d->size_b;
-// 	}
-// 	if (size == 3)
-// 		sort_three(d, stack_type);
-// 	else if (size == 2)
-// 		swap_wrapper(d, stack_type);
-// 	else if (size > 3)
-// 	{
-// 		minindex = ft_stack_minindex(stack);
-// 		if (minindex < size / 2)
-// 			while (minindex-- > 0)
-// 				rotate_wrapper(d, stack_type);
-// 		else
-// 			while (minindex++ < size)
-// 				rev_rotate_wrapper(d, stack_type);
-// 	}
-// }
+	stack = d->a;
+	size = d->size_a;
+	if (stack_type == STACK_B)
+	{
+		stack = d->b;
+		size = d->size_b;
+	}
+	if (size == 3)
+		sort_three(d, stack_type);
+	else if (size == 2)
+		swap_wrapper(d, stack_type);
+	else if (size > 3)
+	{
+		minindex = ft_stack_minindex(stack);
+		if (1 == size % 2 && size / 2 >= minindex)
+			while (minindex-- > 0)
+				rotate_wrapper(d, stack_type);
+		else
+			while (minindex++ < size)
+				rev_rotate_wrapper(d, stack_type);
+	}
+}
 
-// static void	do_smart_push(t_data *d, int stack_type)
-// {
-// 	d += 0;
-// 	stack_type += 0;
-// }
+static void	do_smart_push(t_data *d, int stack_type)
+{
+	d += 0;
+	stack_type += 0;
+}
 
 static void	do_push_swap(t_data *d)
 {
-	// if (ps->size_a > 3)
-	// 	do_smart_push(ps, STACK_A);
-	// simplesort(ps, STACK_A);
-	// if (ps->size_b > 0)
-	// {
-	// 	do_smart_push(ps, STACK_B);
-	// 	if (!ft_stack_is_sorted(ps->a, ASC))
-	// 		simplesort(ps, STACK_A);
-	// }
-	d += 0;
+	if (d->size_a > 3)
+		do_smart_push(d, STACK_A);
+	simplesort(d, STACK_A);
+	if (d->size_b > 0)
+	{
+		do_smart_push(d, STACK_B);
+		if (!ft_stack_is_sorted(d->a, ASC))
+			simplesort(d, STACK_A);
+	}
 }
 
 void	show_stacks(t_data d);			// DELETE THIS BEFORE FINAL PUSH

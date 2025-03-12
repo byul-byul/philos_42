@@ -6,7 +6,7 @@
 /*   By: bhajili <bhajili@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 20:57:47 by byulbyul          #+#    #+#             */
-/*   Updated: 2025/03/12 11:29:13 by bhajili          ###   ########.fr       */
+/*   Updated: 2025/03/12 12:52:36 by bhajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,11 +86,18 @@ t_stack	*ft_stack_new(int value);
 int		ft_stack_is_in(t_stack *begin, int value);
 t_stack	*ft_stack_bottom(t_stack *begin);
 void	ft_stack_clean(t_stack **begin);
+
 void	ft_stack_push(t_stack **begin, t_stack *elem);
 void	ft_stack_push_back(t_stack **begin, t_stack *elem);
 t_stack	*ft_stack_pop(t_stack **begin);
 t_stack	*ft_stack_pop_back(t_stack **begin);
 void	ft_stack_swap(t_stack **begin);
+
+size_t	ft_stack_size(t_stack *begin);
+int		ft_stack_minvalue(t_stack *begin);
+int		ft_stack_maxvalue(t_stack *begin);
+int		ft_stack_minindex(t_stack *begin);
+int		ft_stack_maxindex(t_stack *begin);
 
 int		ft_stack_is_sorted(t_stack *begin, int sort_type);
 int 	ft_stack_index(t_stack *begin, t_stack *elem);

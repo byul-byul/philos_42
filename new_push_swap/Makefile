@@ -6,7 +6,7 @@
 #    By: bhajili <bhajili@student.42abudhabi.ae>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/23 11:48:59 by bhajili           #+#    #+#              #
-#    Updated: 2025/03/12 11:31:09 by bhajili          ###   ########.fr        #
+#    Updated: 2025/03/12 12:52:43 by bhajili          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,7 @@ SRCS    =   $(D_SRC)main.c \
 			$(D_SRC)cleaner.c \
 			$(D_SRC)stack_operations_00.c \
 			$(D_SRC)stack_operations_01.c \
+			$(D_SRC)stack_operations_02.c \
 			$(D_SRC)stack_operations_03.c \
 			$(D_SRC)utils_00.c \
 			$(D_SRC)utils_01.c \
