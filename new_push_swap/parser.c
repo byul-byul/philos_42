@@ -6,7 +6,7 @@
 /*   By: bhajili <bhajili@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 22:47:10 by bhajili           #+#    #+#             */
-/*   Updated: 2025/03/12 10:20:10 by bhajili          ###   ########.fr       */
+/*   Updated: 2025/03/12 10:42:58 by bhajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@ int	parse_arg(t_data *d, int ac, char **av)
 		if (0 != error_code)
 			return (error_code);
 		d->size_a += 1;
+		d->has_allocated_memory = 1;
 	}
-	d->has_allocated_memory = 1;
 	if (ac == 1)
 		ft_freearr(tmp, ft_arrsize(tmp));
 	return (0);

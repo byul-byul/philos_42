@@ -6,7 +6,7 @@
 /*   By: bhajili <bhajili@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 20:57:47 by byulbyul          #+#    #+#             */
-/*   Updated: 2025/03/12 10:23:21 by bhajili          ###   ########.fr       */
+/*   Updated: 2025/03/12 11:29:13 by bhajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # define TRUE				1
 # define FALSE				0
 # define ERR_MSG_ENABLED	TRUE
-# define OPR_MSG_ENABLED	FALSE
+# define OPR_MSG_ENABLED	TRUE
 
 # define ASC				1
 # define DESC				2
@@ -126,17 +126,25 @@ int 	ft_stack_index(t_stack *begin, t_stack *elem);
 // int		ft_min(int a, int b);
 // size_t	ft_arrsize(char **arr);
 
-// void	sa(t_ps *ps);
-// void	sb(t_ps *ps);
-// void	ss(t_ps *ps);
-// void	pa(t_ps *ps);
-// void	pb(t_ps *ps);
-// void	ra(t_ps *ps);
-// void	rb(t_ps *ps);
-// void	rr(t_ps *ps);
-// void	rra(t_ps *ps);
-// void	rrb(t_ps *ps);
-// void	rrr(t_ps *ps);
+void	sa(t_data *d);
+void	sb(t_data *d);
+void	ss(t_data *d);
+void	pa(t_data *d);
+void	pb(t_data *d);
+void	ra(t_data *d);
+void	rb(t_data *d);
+void	rr(t_data *d);
+void	rra(t_data *d);
+void	rrb(t_data *d);
+void	rrr(t_data *d);
+
+void	swap_wrapper(t_data *d, int stack_type);
+void	push_wrapper(t_data *d, int stack_type);
+void	rotate_wrapper(t_data *d, int stack_type);
+void	rev_rotate_wrapper(t_data *d, int stack_type);
+void	double_swap_wrapper(t_data *d);
+void	double_rotate_wrapper(t_data *d);
+void	double_rev_rotate_wrapper(t_data *d);
 
 // void	swap_wrapper(t_stack **stack, int stack_type);
 // void	push_wrapper(t_stack **from, t_stack **to, int stack_type);
