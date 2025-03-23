@@ -6,7 +6,7 @@
 #    By: bhajili <bhajili@student.42abudhabi.ae>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/04 10:36:52 by bhajili           #+#    #+#              #
-#    Updated: 2025/03/11 09:39:44 by bhajili          ###   ########.fr        #
+#    Updated: 2025/03/23 10:04:52 by bhajili          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,8 @@ SRCS    =   $(D_SRC)main.c \
 			$(D_SRC)cleaner.c \
 			$(D_SRC)utils_00.c \
 			$(D_SRC)utils_01.c \
-			$(D_SRC)utils_02.c
+			$(D_SRC)utils_02.c \
+			$(D_SRC)utils_03.c
 
 OBJS    =   $(SRCS:.c=.o)
 
