@@ -6,7 +6,7 @@
 /*   By: bhajili <bhajili@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 09:31:38 by bhajili           #+#    #+#             */
-/*   Updated: 2025/03/11 15:42:40 by bhajili          ###   ########.fr       */
+/*   Updated: 2025/03/23 09:48:09 by bhajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@
 # define SEM_NAME_01	"/updater"
 # define SEM_NAME_02	"/notifier"
 # define SEM_NAME_03	"/end_simulation"
+# define SEM_NAME_04	"/finished_philo"
 
 # define PHILO_MSG_00	"unknown action\n"
 # define PHILO_MSG_01	"has taken a fork\n"
@@ -76,13 +77,13 @@ typedef struct s_data
 {
 	int			has_allocated_memory;
 	int			has_semaphores;
-	int			finished_philo_count;
 	int			philo_count;
 	int			eat_count;
 	long long	die_time;
 	long long	eat_time;
 	long long	sleep_time;
 	t_philo		*philo_list;
+	sem_t		*finished_philo;
 	sem_t		*fork_list;
 	sem_t		*notifier;
 	sem_t		*updater;
@@ -106,6 +107,7 @@ void		print_philo_action(t_philo *philo, long long tstamp, int msg_code);
 void		custom_usleep(t_data *data, long long sleep_time);
 void		rise_simulation_endflag(t_data *d);
 int			is_simulation_endflag_rised(t_data *d);
+int			is_all_philos_finished(t_data *d);
 void		take_fork(t_philo *philo);
 void		drop_fork(t_philo *philo);
 void		take_forks(t_philo *philo);

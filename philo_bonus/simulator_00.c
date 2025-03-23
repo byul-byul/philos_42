@@ -6,7 +6,7 @@
 /*   By: bhajili <bhajili@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 13:18:33 by bhajili           #+#    #+#             */
-/*   Updated: 2025/03/12 05:56:42 by bhajili          ###   ########.fr       */
+/*   Updated: 2025/03/23 09:51:02 by bhajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,9 @@ static void	*monitor_simulation(void *arg)
 			print_philo_action(philo, current_time, 5);
 			break ;
 		}
-		if (philo->data->eat_count >= philo->meal_count)
+		// if (philo->meal_count == philo->data->eat_count)
+		// 	sem_post(philo->data->finished_philo);
+		if (is_all_philos_finished(philo->data))
 		{
 			rise_simulation_endflag(philo->data);
 			break ;

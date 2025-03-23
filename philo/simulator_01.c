@@ -6,7 +6,7 @@
 /*   By: bhajili <bhajili@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 13:18:33 by bhajili           #+#    #+#             */
-/*   Updated: 2025/03/09 17:27:46 by bhajili          ###   ########.fr       */
+/*   Updated: 2025/03/23 09:19:28 by bhajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static int	start_eating(t_philo *philo)
 	philo->last_meal_time = get_current_timestamp();
 	philo->meal_count += 1;
 	if (philo->data->eat_count != -1 && \
-		philo->meal_count >= philo->data->eat_count)
+		philo->meal_count == philo->data->eat_count)
 		philo->data->finished_philo_count++;
 	pthread_mutex_unlock(&philo->data->updater);
 	print_philo_action(philo, get_current_timestamp(), 2);
