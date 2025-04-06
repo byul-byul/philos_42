@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validator.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bhajili <bhajili@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: bhajili <bhajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 10:10:21 by bhajili           #+#    #+#             */
-/*   Updated: 2025/03/04 15:58:34 by bhajili          ###   ########.fr       */
+/*   Updated: 2025/04/06 12:07:35 by bhajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,15 @@
 int	validate_data(int ac, t_data *d)
 {
 	if (0 >= d->philo_count || MAX_PHILO_COUNT < d->philo_count)
-		return (4);
+		return (ERR_DATA_PHILO_COUNT);
 	if (0 >= d->die_time || MIN_MSEC_VALUE > d->die_time)
-		return (5);
+		return (ERR_DATA_DIE_TIME);
 	if (0 >= d->eat_time || MIN_MSEC_VALUE > d->eat_time)
-		return (6);
+		return (ERR_DATA_EAT_TIME);
 	if (0 >= d->sleep_time || MIN_MSEC_VALUE > d->sleep_time)
-		return (7);
+		return (ERR_DATA_SLEEP_TIME);
 	if (5 == ac && 0 >= d->eat_count)
-		return (8);
+		return (ERR_DATA_EAT_COUNT);
 	return (0);
 }
 
@@ -33,13 +33,13 @@ int	validate_arg(int ac, char **av)
 
 	i = -1;
 	if (ac < MIN_ARG_COUNT || ac > MAX_ARG_COUNT)
-		return (1);
+		return (ERR_ARG_COUNT);
 	while (++i < ac)
 	{
 		if (0 == ft_is_digits(av[i]))
-			return (2);
+			return (ERR_ARG_DIGITS);
 		if (0 == ft_is_integer(av[i]))
-			return (3);
+			return (ERR_ARG_INTS);
 	}
 	return (0);
 }

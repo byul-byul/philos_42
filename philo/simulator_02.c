@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   simulator_02.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bhajili <bhajili@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: bhajili <bhajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 13:18:33 by bhajili           #+#    #+#             */
-/*   Updated: 2025/03/09 13:46:37 by bhajili          ###   ########.fr       */
+/*   Updated: 2025/04/06 11:31:26 by bhajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,5 +40,5 @@ void	take_fork(t_philo *philo, int order)
 		pthread_mutex_lock(&philo->right->mutex);
 	if (philo->id % 2 == 0 && order == 1)
 		pthread_mutex_lock(&philo->left->mutex);
-	print_philo_action(philo, get_current_timestamp(), 1);
+	print_philo_action(philo, get_current_timestamp(), PHILO_ACTION_TAKE_FORK);
 }

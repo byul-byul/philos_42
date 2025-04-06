@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_01.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bhajili <bhajili@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: bhajili <bhajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 15:09:32 by bhajili           #+#    #+#             */
-/*   Updated: 2025/03/09 13:28:50 by bhajili          ###   ########.fr       */
+/*   Updated: 2025/04/06 11:34:22 by bhajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,27 +39,27 @@ void	ft_putstr(const char *str)
 
 static void	print_error_01_11(int error_code)
 {
-	if (error_code == 1)
+	if (error_code == ERR_ARG_COUNT)
 		ft_putstr(ERR_MSG_01);
-	else if (error_code == 2)
+	else if (error_code == ERR_ARG_DIGITS)
 		ft_putstr(ERR_MSG_02);
-	else if (error_code == 3)
+	else if (error_code == ERR_ARG_INTS)
 		ft_putstr(ERR_MSG_03);
-	else if (error_code == 4)
+	else if (error_code == ERR_DATA_PHILO_COUNT)
 		ft_putstr(ERR_MSG_04);
-	else if (error_code == 5)
+	else if (error_code == ERR_DATA_DIE_TIME)
 		ft_putstr(ERR_MSG_05);
-	else if (error_code == 6)
+	else if (error_code == ERR_DATA_EAT_TIME)
 		ft_putstr(ERR_MSG_06);
-	else if (error_code == 7)
+	else if (error_code == ERR_DATA_SLEEP_TIME)
 		ft_putstr(ERR_MSG_07);
-	else if (error_code == 8)
+	else if (error_code == ERR_DATA_EAT_COUNT)
 		ft_putstr(ERR_MSG_08);
-	else if (error_code == 9)
+	else if (error_code == ERR_MALLOC_FAILED)
 		ft_putstr(ERR_MSG_09);
-	else if (error_code == 10)
+	else if (error_code == ERR_MUTEXINIT_FAILED)
 		ft_putstr(ERR_MSG_10);
-	else if (error_code == 11)
+	else if (error_code == ERR_PTHREAD_FAILED)
 		ft_putstr(ERR_MSG_11);
 }
 

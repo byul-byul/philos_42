@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_02.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bhajili <bhajili@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: bhajili <bhajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 13:28:52 by bhajili           #+#    #+#             */
-/*   Updated: 2025/03/09 17:30:28 by bhajili          ###   ########.fr       */
+/*   Updated: 2025/04/06 11:36:56 by bhajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ long long	get_current_timestamp(void)
 void	print_philo_action(t_philo *philo, long long tstamp, int msg_code)
 {
 	pthread_mutex_lock(&philo->data->notifier);
-	if (is_simulation_endflag_rised(philo->data) && msg_code == 5)
+	if (is_simulation_endflag_rised(philo->data) \
+		&& msg_code == PHILO_ACTION_DIE)
 		printf("%lld %d %s", tstamp, philo->id, PHILO_MSG_05);
 	if (0 == is_simulation_endflag_rised(philo->data))
 	{

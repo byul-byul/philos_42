@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   simulator_00.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bhajili <bhajili@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: bhajili <bhajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 13:18:33 by bhajili           #+#    #+#             */
-/*   Updated: 2025/03/23 10:02:38 by bhajili          ###   ########.fr       */
+/*   Updated: 2025/04/06 12:08:43 by bhajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void	*monitor_simulation(void *arg)
 		if ((current_time - philo->last_meal_time) > philo->data->die_time)
 		{
 			rise_simulation_endflag(philo->data);
-			print_philo_action(philo, current_time, 5);
+			print_philo_action(philo, current_time, PHILO_ACTION_DIE);
 			break ;
 		}
 		if (is_all_philos_finished(philo->data))
@@ -54,9 +54,9 @@ static void	*simulate_lonely_philo(void *arg)
 	if (is_simulation_endflag_rised(philo->data))
 		return (NULL);
 	sem_wait(philo->data->fork_list);
-	print_philo_action(philo, get_current_timestamp(), 1);
+	print_philo_action(philo, get_current_timestamp(), PHILO_ACTION_TAKE_FORK);
 	custom_usleep(philo->data, philo->data->die_time);
-	print_philo_action(philo, get_current_timestamp(), 5);
+	print_philo_action(philo, get_current_timestamp(), PHILO_ACTION_DIE);
 	sem_post(philo->data->fork_list);
 	return (NULL);
 }
@@ -69,7 +69,7 @@ static int	handle_lonely_philo(t_data *d)
 	philo->last_meal_time = get_current_timestamp();
 	philo->pid = fork();
 	if (philo->pid < 0)
-		return (11);
+		return (ERR_FORK_FAILED);
 	if (philo->pid == 0)
 	{
 		simulate_lonely_philo(philo);
@@ -95,11 +95,12 @@ int	do_simulation(t_data *d)
 		philo->last_meal_time = simulation_start_time;
 		philo->pid = fork();
 		if (philo->pid < 0)
-			return (rise_simulation_endflag(d), finish_simulation(d, i), 11);
+			return (rise_simulation_endflag(d), finish_simulation(d, i), \
+					ERR_FORK_FAILED);
 		if (philo->pid != 0)
 			continue ;
 		if (pthread_create(&philo->thread, NULL, monitor_simulation, philo))
-			return (rise_simulation_endflag(d), finish_simulation(d, i), 12);
+			return (rise_simulation_endflag(d), finish_simulation(d, i), ERR_P);
 		pthread_detach(philo->thread);
 		simulate_philo(philo);
 		exit(0);

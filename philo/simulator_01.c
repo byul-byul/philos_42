@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   simulator_01.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bhajili <bhajili@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: bhajili <bhajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 13:18:33 by bhajili           #+#    #+#             */
-/*   Updated: 2025/03/23 09:19:28 by bhajili          ###   ########.fr       */
+/*   Updated: 2025/04/06 12:10:49 by bhajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static int	simulate_thinking(t_philo *philo)
 {
 	if (is_simulation_endflag_rised(philo->data))
 		return (1);
-	print_philo_action(philo, get_current_timestamp(), 4);
+	print_philo_action(philo, get_current_timestamp(), PHILO_ACTION_THINK);
 	return (0);
 }
 
@@ -24,7 +24,7 @@ static int	simulate_sleeping(t_philo *philo)
 {
 	if (is_simulation_endflag_rised(philo->data))
 		return (1);
-	print_philo_action(philo, get_current_timestamp(), 3);
+	print_philo_action(philo, get_current_timestamp(), PHILO_ACTION_SLEEP);
 	custom_usleep(philo->data, philo->data->sleep_time);
 	return (0);
 }
@@ -35,13 +35,15 @@ static int	start_eating(t_philo *philo)
 		return (drop_forks(philo), 1);
 	pthread_mutex_lock(&philo->data->updater);
 	philo->last_meal_time = get_current_timestamp();
+	pthread_mutex_unlock(&philo->data->updater);
+	print_philo_action(philo, get_current_timestamp(), PHILO_ACTION_EAT);
+	custom_usleep(philo->data, philo->data->eat_time);
+	pthread_mutex_lock(&philo->data->updater);
 	philo->meal_count += 1;
 	if (philo->data->eat_count != -1 && \
 		philo->meal_count == philo->data->eat_count)
 		philo->data->finished_philo_count++;
 	pthread_mutex_unlock(&philo->data->updater);
-	print_philo_action(philo, get_current_timestamp(), 2);
-	custom_usleep(philo->data, philo->data->eat_time);
 	return (0);
 }
 

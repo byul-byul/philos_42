@@ -6,7 +6,7 @@
 /*   By: bhajili <bhajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 15:00:58 by bhajili           #+#    #+#             */
-/*   Updated: 2025/04/06 08:37:14 by bhajili          ###   ########.fr       */
+/*   Updated: 2025/04/06 11:39:24 by bhajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,23 +16,23 @@ static int	init_program_semaphores(t_data *d)
 {
 	d->fork_list = sem_open(SEM_NAME_00, O_CREAT, S_IWUSR, d->philo_count);
 	if (SEM_FAILED == d->fork_list)
-		return (10);
+		return (ERR_SEMOPEN_FAILED);
 	sem_unlink(SEM_NAME_00);
 	d->updater = sem_open(SEM_NAME_01, O_CREAT, S_IWUSR, 1);
 	if (SEM_FAILED == d->updater)
-		return (10);
+		return (ERR_SEMOPEN_FAILED);
 	sem_unlink(SEM_NAME_01);
 	d->notifier = sem_open(SEM_NAME_02, O_CREAT, S_IWUSR, 1);
 	if (SEM_FAILED == d->notifier)
-		return (10);
+		return (ERR_SEMOPEN_FAILED);
 	sem_unlink(SEM_NAME_02);
 	d->end_simulation = sem_open(SEM_NAME_03, O_CREAT, S_IWUSR, 0);
 	if (SEM_FAILED == d->end_simulation)
-		return (10);
+		return (ERR_SEMOPEN_FAILED);
 	sem_unlink(SEM_NAME_03);
 	d->finished_philo = sem_open(SEM_NAME_04, O_CREAT, S_IWUSR, d->philo_count);
 	if (SEM_FAILED == d->finished_philo)
-		return (10);
+		return (ERR_SEMOPEN_FAILED);
 	sem_unlink(SEM_NAME_04);
 	return (0);
 }
@@ -65,7 +65,7 @@ int	init_data(t_data *d)
 		return (error_code);
 	d->philo_list = malloc(sizeof(t_philo) * d->philo_count);
 	if (NULL == d->philo_list)
-		return (9);
+		return (ERR_MALLOC_FAILED);
 	d->has_allocated_memory = 1;
 	while (++i < d->philo_count)
 		init_philo(d, i);

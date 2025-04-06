@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   simulator_00.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bhajili <bhajili@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: bhajili <bhajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 13:18:33 by bhajili           #+#    #+#             */
-/*   Updated: 2025/03/11 15:49:40 by bhajili          ###   ########.fr       */
+/*   Updated: 2025/04/06 11:30:24 by bhajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void	*simulate_lonely_philo(void *arg)
 	pthread_mutex_lock(&philo->left->mutex);
 	print_philo_action(philo, get_current_timestamp(), 1);
 	custom_usleep(philo->data, philo->data->die_time);
-	print_philo_action(philo, get_current_timestamp(), 5);
+	print_philo_action(philo, get_current_timestamp(), PHILO_ACTION_DIE);
 	pthread_mutex_unlock(&philo->left->mutex);
 	return (NULL);
 }
@@ -32,7 +32,7 @@ static int	handle_lonely_philo(t_data *d)
 	if (pthread_create(&d->philo_list[0].thread, NULL, \
 		simulate_lonely_philo, &d->philo_list[0]))
 	{
-		print_error(11);
+		print_error(ERR_PTHREAD_FAILED);
 		d->end_simulation = 1;
 		return (1);
 	}
@@ -64,7 +64,7 @@ static void	monitor_simulation(t_data *d)
 			if ((current_time - philo->last_meal_time) > d->die_time)
 			{
 				rise_simulation_endflag(d);
-				print_philo_action(philo, current_time, 5);
+				print_philo_action(philo, current_time, PHILO_ACTION_DIE);
 				break ;
 			}
 			if (d->finished_philo_count >= d->philo_count)
@@ -92,7 +92,8 @@ int	do_simulation(t_data *d)
 		philo = &d->philo_list[i];
 		philo->last_meal_time = simulation_start_time;
 		if (pthread_create(&philo->thread, NULL, simulate_philo, philo))
-			return (rise_simulation_endflag(d), finish_simulation(d, i), 11);
+			return (rise_simulation_endflag(d), finish_simulation(d, i), \
+					ERR_PTHREAD_FAILED);
 	}
 	monitor_simulation(d);
 	finish_simulation(d, d->philo_count);

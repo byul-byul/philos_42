@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   simulator_02.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bhajili <bhajili@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: bhajili <bhajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 13:18:33 by bhajili           #+#    #+#             */
-/*   Updated: 2025/03/10 07:09:16 by bhajili          ###   ########.fr       */
+/*   Updated: 2025/04/06 12:11:17 by bhajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	drop_fork(t_philo *philo)
 void	take_fork(t_philo *philo)
 {
 	sem_wait(philo->data->fork_list);
-	print_philo_action(philo, get_current_timestamp(), 1);
+	print_philo_action(philo, get_current_timestamp(), PHILO_ACTION_TAKE_FORK);
 }
 
 void	take_forks(t_philo *philo)

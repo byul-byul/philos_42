@@ -6,7 +6,7 @@
 /*   By: bhajili <bhajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 15:00:58 by bhajili           #+#    #+#             */
-/*   Updated: 2025/04/06 07:42:57 by bhajili          ###   ########.fr       */
+/*   Updated: 2025/04/06 11:26:57 by bhajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,13 @@ static int	init_program_mutexes(t_data *d)
 	{
 		d->fork_list[i].id = i + 1;
 		if (pthread_mutex_init(&d->fork_list[i].mutex, NULL))
-			return (destroy_mutex_list(d, i), 10);
+			return (destroy_mutex_list(d, i), ERR_MUTEXINIT_FAILED);
 	}
 	if (pthread_mutex_init(&d->notifier, NULL))
-		return (destroy_mutex_list(d, i), 10);
+		return (destroy_mutex_list(d, i), ERR_MUTEXINIT_FAILED);
 	if (pthread_mutex_init(&d->updater, NULL))
 		return (destroy_mutex_list(d, i), \
-				pthread_mutex_destroy(&d->notifier), 10);
+				pthread_mutex_destroy(&d->notifier), ERR_MUTEXINIT_FAILED);
 	return (0);
 }
 
@@ -87,5 +87,5 @@ int	init_data(t_data *d)
 		init_philo_list(d);
 		return (0);
 	}
-	return (9);
+	return (ERR_MALLOC_FAILED);
 }

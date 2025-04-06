@@ -6,7 +6,7 @@
 /*   By: bhajili <bhajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 09:31:38 by bhajili           #+#    #+#             */
-/*   Updated: 2025/04/06 07:42:54 by bhajili          ###   ########.fr       */
+/*   Updated: 2025/04/06 11:28:59 by bhajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,32 @@
 # define ERR_MSG_11	"ERROR: simulation: pthread_create() failed.\n"
 
 typedef struct s_data	t_data;
+
+typedef enum e_error
+{
+	ERR_UNKNOWN,
+	ERR_ARG_COUNT,
+	ERR_ARG_DIGITS,
+	ERR_ARG_INTS,
+	ERR_DATA_PHILO_COUNT,
+	ERR_DATA_DIE_TIME,
+	ERR_DATA_EAT_TIME,
+	ERR_DATA_SLEEP_TIME,
+	ERR_DATA_EAT_COUNT,
+	ERR_MALLOC_FAILED,
+	ERR_MUTEXINIT_FAILED,
+	ERR_PTHREAD_FAILED
+}				t_error;
+
+typedef enum e_philo_action
+{
+	PHILO_ACTION_UNKNOWN,
+	PHILO_ACTION_TAKE_FORK,
+	PHILO_ACTION_EAT,
+	PHILO_ACTION_SLEEP,
+	PHILO_ACTION_THINK,
+	PHILO_ACTION_DIE
+}				t_philo_action;
 
 typedef struct s_fork
 {
