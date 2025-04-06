@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initializator.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bhajili <bhajili@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: bhajili <bhajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 15:00:58 by bhajili           #+#    #+#             */
-/*   Updated: 2025/03/23 10:13:45 by bhajili          ###   ########.fr       */
+/*   Updated: 2025/04/06 08:37:14 by bhajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static int	init_program_semaphores(t_data *d)
 	if (SEM_FAILED == d->end_simulation)
 		return (10);
 	sem_unlink(SEM_NAME_03);
-	d->finished_philo = sem_open(SEM_NAME_04, O_CREAT, S_IWUSR, 0);
+	d->finished_philo = sem_open(SEM_NAME_04, O_CREAT, S_IWUSR, d->philo_count);
 	if (SEM_FAILED == d->finished_philo)
 		return (10);
 	sem_unlink(SEM_NAME_04);
@@ -44,7 +44,7 @@ static void	init_philo(t_data *d, int i)
 	d->philo_list[i].meal_count = 0;
 }
 
-static void	init_fields(t_data *d)
+void	pre_init_data(t_data *d)
 {
 	d->has_allocated_memory = 0;
 	d->fork_list = SEM_FAILED;
@@ -60,8 +60,6 @@ int	init_data(t_data *d)
 	int	i;
 
 	i = -1;
-	error_code = 0;
-	init_fields(d);
 	error_code = init_program_semaphores(d);
 	if (0 != error_code)
 		return (error_code);

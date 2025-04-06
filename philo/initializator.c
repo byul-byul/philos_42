@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initializator.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bhajili <bhajili@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: bhajili <bhajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 15:00:58 by bhajili           #+#    #+#             */
-/*   Updated: 2025/03/11 09:37:56 by bhajili          ###   ########.fr       */
+/*   Updated: 2025/04/06 07:42:57 by bhajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static int	init_program_mutexes(t_data *d)
 	return (0);
 }
 
-static void	init_simple_data_fields(t_data *d)
+void	pre_init_data(t_data *d)
 {
 	d->has_allocated_memory = 0;
 	d->has_active_mutex = 0;
@@ -71,7 +71,6 @@ int	init_data(t_data *d)
 	int	error_code;
 
 	error_code = 0;
-	init_simple_data_fields(d);
 	d->philo_list = malloc(sizeof(t_philo) * d->philo_count);
 	d->fork_list = malloc(sizeof(t_fork) * d->philo_count);
 	if (NULL == d->fork_list && d->philo_list)

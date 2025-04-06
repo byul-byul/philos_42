@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bhajili <bhajili@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: bhajili <bhajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 09:33:44 by bhajili           #+#    #+#             */
-/*   Updated: 2025/03/11 10:12:38 by bhajili          ###   ########.fr       */
+/*   Updated: 2025/04/06 07:45:39 by bhajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ int	philo(int ac, char **av)
 	t_data	d;
 	int		error_code;
 
+	pre_init_data(&d);
 	error_code = validate_arg(ac, av);
 	if (0 == error_code)
 		error_code = parse_arg(ac, av, &d);

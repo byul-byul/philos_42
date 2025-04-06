@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bhajili <bhajili@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: bhajili <bhajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 09:31:38 by bhajili           #+#    #+#             */
-/*   Updated: 2025/03/11 09:19:47 by bhajili          ###   ########.fr       */
+/*   Updated: 2025/04/06 07:42:54 by bhajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ int			validate_arg(int ac, char **av);
 int			parse_arg(int ac, char **av, t_data *data);
 int			validate_data(int ac, t_data *data);
 int			init_data(t_data *data);
+void		pre_init_data(t_data *d);
 int			do_simulation(t_data *d);
 void		destroy_mutex_list(t_data *d, int size);
 void		clean_data(t_data *d);

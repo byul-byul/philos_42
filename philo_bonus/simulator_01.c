@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   simulator_01.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bhajili <bhajili@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: bhajili <bhajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 13:18:33 by bhajili           #+#    #+#             */
-/*   Updated: 2025/03/23 09:51:20 by bhajili          ###   ########.fr       */
+/*   Updated: 2025/04/06 10:12:56 by bhajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,14 @@ static int	start_eating(t_philo *philo)
 		return (drop_forks(philo), 1);
 	sem_wait(philo->data->updater);
 	philo->last_meal_time = get_current_timestamp();
-	philo->meal_count += 1;
-	if (philo->meal_count == philo->data->eat_count)
-		sem_post(philo->data->finished_philo);
 	sem_post(philo->data->updater);
 	print_philo_action(philo, get_current_timestamp(), 2);
 	custom_usleep(philo->data, philo->data->eat_time);
+	sem_wait(philo->data->updater);
+	philo->meal_count += 1;
+	if (philo->meal_count == philo->data->eat_count)
+		sem_wait(philo->data->finished_philo);
+	sem_post(philo->data->updater);
 	return (0);
 }
 

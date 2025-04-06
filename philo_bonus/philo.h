@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bhajili <bhajili@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: bhajili <bhajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 09:31:38 by bhajili           #+#    #+#             */
-/*   Updated: 2025/03/23 10:10:51 by bhajili          ###   ########.fr       */
+/*   Updated: 2025/04/06 07:44:54 by bhajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ int			validate_arg(int ac, char **av);
 int			parse_arg(int ac, char **av, t_data *data);
 int			validate_data(int ac, t_data *data);
 int			init_data(t_data *data);
+void		pre_init_data(t_data *d);
 int			do_simulation(t_data *d);
 void		clean_data(t_data *d);
 void		print_error(int error_code);
