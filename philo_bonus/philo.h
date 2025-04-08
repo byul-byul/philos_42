@@ -6,7 +6,7 @@
 /*   By: bhajili <bhajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 09:31:38 by bhajili           #+#    #+#             */
-/*   Updated: 2025/04/06 12:12:57 by bhajili          ###   ########.fr       */
+/*   Updated: 2025/04/08 14:05:37 by bhajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ typedef struct s_data
 	long long	die_time;
 	long long	eat_time;
 	long long	sleep_time;
+	long long	simulation_start_time;
 	t_philo		*philo_list;
 	sem_t		*finished_philo;
 	sem_t		*fork_list;
