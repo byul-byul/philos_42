@@ -6,7 +6,7 @@
 /*   By: bhajili <bhajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 13:18:33 by bhajili           #+#    #+#             */
-/*   Updated: 2025/04/09 14:49:07 by bhajili          ###   ########.fr       */
+/*   Updated: 2025/04/09 15:16:32 by bhajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,13 +61,13 @@ static void	monitor_simulation(t_data *d)
 		{
 			philo = &d->philo_list[i];
 			current_time = get_current_timestamp();
-			if ((current_time - philo->last_meal_time) > d->die_time)
+			if (is_philo_died(d, current_time, philo->last_meal_time))
 			{
 				rise_simulation_endflag(d);
 				print_philo_action(philo, current_time, PHILO_ACTION_DIE);
 				break ;
 			}
-			if (d->finished_philo_count >= d->philo_count)
+			if (is_all_philos_finished(d))
 			{
 				rise_simulation_endflag(d);
 				break ;

@@ -6,7 +6,7 @@
 /*   By: bhajili <bhajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 09:31:38 by bhajili           #+#    #+#             */
-/*   Updated: 2025/04/08 13:57:12 by bhajili          ###   ########.fr       */
+/*   Updated: 2025/04/09 15:17:27 by bhajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@
 # define ERR_MSG_10	"ERROR: data initialization: pthread_mutex_init() failed.\n"
 # define ERR_MSG_11	"ERROR: simulation: pthread_create() failed.\n"
 
+typedef long long		t_time;
 typedef struct s_data	t_data;
 
 typedef enum e_error
@@ -124,15 +125,17 @@ int			do_simulation(t_data *d);
 void		destroy_mutex_list(t_data *d, int size);
 void		clean_data(t_data *d);
 void		print_error(int error_code);
-long long	get_current_timestamp(void);
+t_time		get_current_timestamp(void);
 int			ft_is_digits(const char *str);
 int			ft_is_integer(const char *str);
 int			ft_atoi(const char *str);
 long long	ft_atoll(const char *str);
-void		print_philo_action(t_philo *philo, long long tstamp, int msg_code);
-void		custom_usleep(t_data *data, long long sleep_time);
+void		print_philo_action(t_philo *philo, t_time tstamp, int msg_code);
+void		custom_usleep(t_data *data, t_time sleep_time);
 void		rise_simulation_endflag(t_data *d);
 int			is_simulation_endflag_rised(t_data *d);
+int			is_philo_died(t_data *d, t_time curr_time, t_time last_meal_time);
+int			is_all_philos_finished(t_data *d);
 void		take_fork(t_philo *philo, int order);
 void		drop_fork(t_philo *philo, int order);
 void		drop_forks(t_philo *philo);
