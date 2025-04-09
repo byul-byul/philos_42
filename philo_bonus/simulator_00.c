@@ -6,7 +6,7 @@
 /*   By: bhajili <bhajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 13:18:33 by bhajili           #+#    #+#             */
-/*   Updated: 2025/04/08 14:06:27 by bhajili          ###   ########.fr       */
+/*   Updated: 2025/04/09 13:47:19 by bhajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,10 +84,10 @@ int	do_simulation(t_data *d)
 	int			i;
 	t_philo		*philo;
 
+	d->simulation_start_time = get_current_timestamp();
 	if (d->philo_count == 1)
 		return (handle_lonely_philo(d));
 	i = -1;
-	d->simulation_start_time = get_current_timestamp();
 	while (++i < d->philo_count)
 	{
 		philo = &d->philo_list[i];

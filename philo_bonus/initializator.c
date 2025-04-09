@@ -6,7 +6,7 @@
 /*   By: bhajili <bhajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 15:00:58 by bhajili           #+#    #+#             */
-/*   Updated: 2025/04/06 11:39:24 by bhajili          ###   ########.fr       */
+/*   Updated: 2025/04/08 14:56:14 by bhajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,10 @@ static int	init_program_semaphores(t_data *d)
 	if (SEM_FAILED == d->finished_philo)
 		return (ERR_SEMOPEN_FAILED);
 	sem_unlink(SEM_NAME_04);
+	d->death_message = sem_open(SEM_NAME_05, O_CREAT, S_IWUSR, 1);
+	if (SEM_FAILED == d->finished_philo)
+		return (ERR_SEMOPEN_FAILED);
+	sem_unlink(SEM_NAME_05);
 	return (0);
 }
 

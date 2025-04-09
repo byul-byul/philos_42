@@ -6,7 +6,7 @@
 /*   By: bhajili <bhajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 13:28:52 by bhajili           #+#    #+#             */
-/*   Updated: 2025/04/08 14:06:48 by bhajili          ###   ########.fr       */
+/*   Updated: 2025/04/08 15:03:52 by bhajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,10 @@ void	print_philo_action(t_philo *philo, long long tstamp, int msg_code)
 {
 	tstamp -= philo->data->simulation_start_time;
 	sem_wait(philo->data->notifier);
-	if (is_simulation_endflag_rised(philo->data) && msg_code == 5)
-		printf("%lld %d %s", tstamp, philo->id, PHILO_MSG_05);
+	if (is_simulation_endflag_rised(philo->data) && \
+		msg_code == PHILO_ACTION_DIE)
+		if (-1 != sem_trywait(philo->data->death_message))
+			printf("%lld %d %s", tstamp, philo->id, PHILO_MSG_05);
 	if (0 == is_simulation_endflag_rised(philo->data))
 	{
 		if (msg_code == 1)
@@ -36,8 +38,6 @@ void	print_philo_action(t_philo *philo, long long tstamp, int msg_code)
 			printf("%lld %d %s", tstamp, philo->id, PHILO_MSG_03);
 		else if (msg_code == 4)
 			printf("%lld %d %s", tstamp, philo->id, PHILO_MSG_04);
-		else if (msg_code == 5)
-			printf("%lld %d %s", tstamp, philo->id, PHILO_MSG_05);
 		else
 			printf(PHILO_MSG_00);
 	}

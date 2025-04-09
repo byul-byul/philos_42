@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: bhajili <bhajili@student.42abudhabi.ae>    +#+  +:+       +#+         #
+#    By: bhajili <bhajili@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/04 10:36:52 by bhajili           #+#    #+#              #
-#    Updated: 2025/03/11 09:17:04 by bhajili          ###   ########.fr        #
+#    Updated: 2025/04/09 13:32:03 by bhajili          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,7 @@ D_SRC   =   ./
 
 CC      =   cc
 CFLAGS  =   -Wall -Wextra -Werror
+LDFLAGS =	-pthread
 
 SRCS    =   $(D_SRC)main.c \
 			$(D_SRC)philo.c \
@@ -37,7 +38,7 @@ OBJS    =   $(SRCS:.c=.o)
 all:    $(NAME)
 
 $(NAME): $(OBJS)
-	$(CC) -o $@ $^ -o $(NAME)
+	$(CC) -o $@ $^ $(LDFLAGS) -o $(NAME)
 	
 clean:
 	rm -f $(OBJS)

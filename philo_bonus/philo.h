@@ -6,7 +6,7 @@
 /*   By: bhajili <bhajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 09:31:38 by bhajili           #+#    #+#             */
-/*   Updated: 2025/04/08 14:05:37 by bhajili          ###   ########.fr       */
+/*   Updated: 2025/04/08 14:55:48 by bhajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@
 # define SEM_NAME_02	"/notifier"
 # define SEM_NAME_03	"/end_simulation"
 # define SEM_NAME_04	"/finished_philo"
+# define SEM_NAME_05	"/death_message"
 
 # define PHILO_MSG_00	"unknown action\n"
 # define PHILO_MSG_01	"has taken a fork\n"
@@ -115,6 +116,7 @@ typedef struct s_data
 	sem_t		*notifier;
 	sem_t		*updater;
 	sem_t		*end_simulation;
+	sem_t		*death_message;
 }				t_data;
 
 int			philo(int ac, char **av);
